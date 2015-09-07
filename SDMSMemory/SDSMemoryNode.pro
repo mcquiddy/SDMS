@@ -17,10 +17,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     sdsmemorynode.cpp \
-    Servidor.cpp
+    Servidor.cpp \
+    memorymannager.cpp
 
 HEADERS += \
     sdsmemorynode.h \
     linked_list.h \
     Node.h \
-    Servidor.h
+    Servidor.h \
+    constants_SDSM.h \
+    memorymannager.h
