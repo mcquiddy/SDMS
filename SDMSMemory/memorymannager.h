@@ -10,22 +10,29 @@
 #include <constants_SDSM.h>
 
 using namespace std;
+struct d_pointer{
+int IPv4;
+void* dirMemory;
+};
+
+
 class MemoryMannager
 {
 public:
     MemoryMannager();
        int memory;
-    string pedirMemoria(string *pSize,string pDescriptor);
+       int direccion;
+       void* cantidadMemoria;
+   string pedirMemoria(string *pSize,string pDescriptor);
     string liberarMemoria(string* pPointer);
-    string obtenerEspacio(string* pPointer);
-    string setearEspacio(string* pPointer);
+    string obtenerDato(string* pPointer);
+    string setearDato(string* pPointer);
     string status();
-    void setMemory(int pSize);
-    Node<void*> *searchMemory(string pDirMemory);
+    void setMemory(int pSize,void* pMemory);
 
 
- private:
-     list <void*>   List_Memory;
+
+
 };
 
 #endif // MEMORYMANNAGER_H
