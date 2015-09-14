@@ -101,7 +101,7 @@ void *SocketServer::controladorCliente(void *obj){
     while(true){
         string mensaje;
         while(true){
-            char buffer[40]={0};
+            char buffer[1000]={0};
             int bytes = recv(data->descriptor,buffer,40,0);
             mensaje.append(buffer,bytes);
             if(bytes<=0||mensaje=="close"){
