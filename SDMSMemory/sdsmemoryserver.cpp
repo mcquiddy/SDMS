@@ -2,7 +2,7 @@
 
 SDSMemoryServer::SDSMemoryServer(){}
 
-void SDSMemoryServer::reciveMns(string message){}
+void SDSMemoryServer::reciveMns(char * message){}
 void SDSMemoryServer::newClient(int id,int Puerto){}
 void SDSMemoryServer::sentMns(const char* mns){}
 

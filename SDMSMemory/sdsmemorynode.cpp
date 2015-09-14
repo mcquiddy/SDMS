@@ -23,34 +23,29 @@ d_pointer SDSMemoryNode::Parse_dpinter(string mns){
     return new_dpointer;
 
 }
-d_pointer_size SDSMemoryNode::Parse_dpinter_size(string mns){
+d_pointer_size SDSMemoryNode::Parse_dpinter_size(char* mns){
 
-    string strPsize;
-    string strDir;
-    strDir=parseDelimitador(&mns);
-    strPsize= mns.substr(0,mns.find(DELIMITADOR));
 
-    int pSize=parseToInt(strPsize);
 
-    int pDir=parseToInt(strDir);
 
     d_pointer_size pointerSize;
-    pointerSize.bytes=pSize;
-    pointerSize.pointer.dirMemory=pDir;
+
 
     return pointerSize;
 
 }
 
-bystream SDSMemoryNode::Parse_bystream(string *mns)
+bystream SDSMemoryNode::Parse_bystream(Document doc)
 {
-    string strData;
-    string strType;
-    strData=parseDelimitador(mns);
-    strType= parseDelimitador(mns);
+
+
+//    string strData;
+//    string strType;
+//    strData=parseDelimitador(mns);
+//    strType= parseDelimitador(mns);
     bystream Dato;
-    Dato.data=strData;
-    Dato.type=strType;
+//    Dato.data=strData;
+//    Dato.type=strType;
     return Dato;
 
 }
@@ -156,23 +151,25 @@ void SDSMemoryNode::newClient(int id, int Puerto)
  * @brief SDSMemoryNode::reciveMns
  * @param mns
  */
-void SDSMemoryNode::reciveMns(string message){
+void SDSMemoryNode::reciveMns(char * message){
+
+    cout<<message<<endl;
+    Document doc;
+    doc.ParseInsitu(message);
+    assert(doc.IsObject());
+    assert(doc.HasMember("protocolo"));
+    assert(doc["protocolo"].IsString());
+
+
     string comando;
-    //cout<<" protocolo "<<mensaje<<" tamano "<<mensaje.length()<<endl;
-    comando = parseDelimitador(&message);
+    comando=doc["protocolo"].GetString();
     if(comando=="d_calloc"){
-        string strPsize;
-        strPsize= message.substr(0,message.find(DELIMITADOR));
-       int pSize= parseToInt(strPsize);
-        d_calloc(pSize);
+      assert(doc.HasMember("pSize"));
+      assert(doc["pSize"].IsInt());
+      int pSize= doc["pSize"].GetInt();
+      d_calloc(pSize);
     }
 
-    else if(comando=="d_set"){
-        bystream Dato=Parse_bystream(&message);
-        d_pointer_size pointerSize = Parse_dpinter_size(message);
-        d_set(pointerSize,Dato);
-
-    }
 
     else if(comando=="d_status"){
         d_status();
@@ -180,9 +177,66 @@ void SDSMemoryNode::reciveMns(string message){
     }
     else{
 
+        assert(doc.HasMember("dir"));
+        assert(doc["dir"].IsInt());
+        int pDir= doc["dir"].GetInt();
 
-        d_pointer_size pointerSize=Parse_dpinter_size(message);
+        assert(doc.HasMember("pSize"));
+        assert(doc["pSize"].IsInt());
+        int pSize= doc["pSize"].GetInt();
 
+
+        d_pointer_size pointerSize;
+        pointerSize.bytes=pSize;
+        pointerSize.pointer.dirMemory=pDir;
+
+       if(comando=="d_set"){
+          int status;
+           assert(doc.HasMember("tipo"));
+           assert(doc["tipo"].IsString());
+           string tipo= doc["tipo"].GetString();
+            assert(doc.HasMember("dato"));
+
+           if(tipo=="char"){
+               assert(doc["dato"].IsString());
+              //Parsear a char
+                const char* pData =doc["dato"].GetString();
+                status= Manejador.setearDatoChar(pointerSize,pData);
+           }
+           else if(tipo=="int"){
+               assert(doc["dato"].IsInt());
+                //Parsear a int
+                int pData =doc["dato"].GetInt();
+                status= Manejador.setearDatoInt(pointerSize,pData);
+           }
+           else if(tipo=="bool"){
+       //Parsear a bool
+                 //status= Manejador.setearDatoBool(pointerSize,pData);
+           }
+           else if(tipo=="float"){
+       //parsear a float
+                // status= Manejador.setearDatoFloat(pointerSize,pData);
+
+           }
+           else if(tipo=="arrayint"){
+       //parsear a arreglo de int
+                // status= Manejador.setearDatoArrayInt(pointerSize,pData);
+           }
+           else if(tipo=="arraychar"){
+       //Parsear a arreglos de char
+                 //status= Manejador.setearDatoArrayChar(pointerSize,pData);
+           }
+           else if(tipo=="long"){
+       //Parsear a long
+                // status= Manejador.setearDatoLong(pointerSize,pData);
+           }
+           else if(tipo=="double"){
+       //Parsear a double
+                // status= Manejador.setearDatoDouble(pointerSize,pData);
+           }
+            d_set(pointerSize,status);
+
+        }
        if(comando=="d_get"){
 
         d_get(pointerSize);
@@ -194,20 +248,6 @@ void SDSMemoryNode::reciveMns(string message){
     }
 
 
-//    char buffer[sizeof(mns)];
-//    memcpy(buffer, mns, sizeof(mns));
-//   if (doc.ParseInsitu(buffer).HasParseError())
-//           cout<<"ERROR"<<endl;
-//   ////////////////////////////////////////////////////////////////////////////
-//    // 2. Access values in document.
-
-//   cout<<"\nAccess values in document:\n";
-//   assert(doc.IsObject());    // Document is a JSON value represents the root of DOM. Root can be either an object or array.
-
-//   assert(doc.HasMember("hello"));
-//   assert(doc["hello"].IsString());
-//   cout<<"hello "<< doc["hello"].GetString()<<endl;
-//   cout<<" puntero  "<<endl;
 }
 
 SDSMemoryNode::~SDSMemoryNode(){
@@ -218,18 +258,18 @@ SDSMemoryNode::~SDSMemoryNode(){
 
 
 
-void SDSMemoryNode::d_set(d_pointer_size pSet, bystream pData)
+void SDSMemoryNode::d_set(d_pointer_size pSet, int pStatus)
 {
-    int status= Manejador.setearDato(pSet,pData);
+    int status=pStatus;
     StringBuffer s;
     Writer<StringBuffer> writer(s);
-
     writer.StartObject();
     writer.String("status");
+
+
+
+
     writer.Int(status);
-
-
-
     writer.EndObject();
     const char* mensaje=s.GetString();
     cout<<"Enviando... "<<mensaje<<endl;

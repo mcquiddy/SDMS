@@ -35,14 +35,14 @@ int memory;
     string obtenerDato(string* pPointer);
 
   int setearDato(d_pointer_size pPointerSize, bystream pData);
-   int setearDatoInt(d_pointer_size pPointerSize, bystream pData);
-   int setearDatoChar(d_pointer_size pPointerSize, bystream pData);
-   int setearDatoFloat(d_pointer_size pPointerSize, bystream pData);
-   int setearDatoBool(d_pointer_size pPointerSize, bystream pData);
-   int setearDatoArrayInt(d_pointer_size pPointerSize, bystream pData);
-   int setearDatoArrayChar(d_pointer_size pPointerSize, bystream pData);
-   int setearDatoLong(d_pointer_size pPointerSize, bystream pData);
-   int setearDatoDouble(d_pointer_size pPointerSize, bystream pData);
+   int setearDatoInt(d_pointer_size pPointerSize, int pData);
+   int setearDatoChar(d_pointer_size pPointerSize, const char* pData);
+   int setearDatoFloat(d_pointer_size pPointerSize, float pData);
+   int setearDatoBool(d_pointer_size pPointerSize, bool pData);
+   int setearDatoArrayInt(d_pointer_size pPointerSize, int* pData);
+   int setearDatoArrayChar(d_pointer_size pPointerSize, char* pData);
+   int setearDatoLong(d_pointer_size pPointerSize, long pData);
+   int setearDatoDouble(d_pointer_size pPointerSize, double pData);
 
     string status();
     bool setMemory(int pSize);

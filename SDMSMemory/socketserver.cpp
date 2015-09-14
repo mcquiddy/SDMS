@@ -99,39 +99,20 @@ void SocketServer::closeSocket(){flag_listen=false;}
 void *SocketServer::controladorCliente(void *obj){    
     dataSocket*data = (dataSocket*)obj;
     while(true){
-        string mensaje;
-        while(true){
+
+
             char buffer[1000]={0};
-            int bytes = recv(data->descriptor,buffer,40,0);
-            mensaje.append(buffer,bytes);
-            if(bytes<=0||mensaje=="close"){
-                close(data->descriptor);
-                pthread_exit(NULL);
-            }
-            if(bytes<40){
-                break;
-            }
+            int bytes = recv(data->descriptor,buffer,1000,0);
+            if(bytes<0)
+                cout<<"ERROR:-No se leyó correctamente\n";
+            else{
+                data->server->reciveMns(buffer);
         }
 
-//        char* mns=&mensaje[0u];
-//        data->server->reciveMns(mensaje);
-//        char buffer[1000]={0};
-//        int bytes = recv(data->descriptor,buffer,1000,0);
-//        if(bytes<0)
-//            cout<<"ERROR:-No se leyó correctamente\n";
-//        else{
-//            cout<<buffer<<endl;
-//            Document doc;
-//            doc.ParseInsitu(buffer);
-//            assert(doc.IsObject());
-//            assert(doc.HasMember("protocolo"));
-//            assert(doc["protocolo"].IsString());
-//            assert(doc.HasMember("num"));
-//            assert(doc["num"].IsInt());
-//            cout<<"hello: "<<doc["protocolo"].GetString()<<endl;
-//            cout<<"num: "<<doc["num"].GetInt()<<endl;
 
-//        }
+
+
+
 
     }
     close(data->descriptor);
