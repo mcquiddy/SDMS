@@ -14,41 +14,8 @@ void SDSMemoryNode::start(int Puerto, int Puerto_status)
     SDSMemoryServer::start();
 }
 
-d_pointer SDSMemoryNode::Parse_dpinter(string mns){
-//    assert(mns.IsObject());
-    d_pointer new_dpointer;
-//    new_dpointer.dirMemory=mns["address"].GetInt();
-
-    //new_dpointer.flag_espacio=mns["espacio"].GetBool();
-    return new_dpointer;
-
-}
-d_pointer_size SDSMemoryNode::Parse_dpinter_size(char* mns){
 
 
-
-
-    d_pointer_size pointerSize;
-
-
-    return pointerSize;
-
-}
-
-bystream SDSMemoryNode::Parse_bystream(Document doc)
-{
-
-
-//    string strData;
-//    string strType;
-//    strData=parseDelimitador(mns);
-//    strType= parseDelimitador(mns);
-    bystream Dato;
-//    Dato.data=strData;
-//    Dato.type=strType;
-    return Dato;
-
-}
 
 void SDSMemoryNode::d_calloc(int pSize)
 {
@@ -87,14 +54,25 @@ void SDSMemoryNode::d_free(d_pointer_size free)
     puerto->sentMns(mensaje,client);
 }
 
-void SDSMemoryNode::d_get(d_pointer_size get)
-{
-
-}
 
 void SDSMemoryNode::d_status()
 {
-    Manejador.status();
+    d_estado estado=Manejador.status();
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
+
+    writer.StartObject();
+    writer.String("memoria_disponible");
+    writer.Int(estado.totalMemory);
+    writer.String("max_chunk");
+    writer.Int(estado.biggerChunk);
+
+
+    writer.EndObject();
+    const char* mensaje=s.GetString();
+    cout<<"Enviando... "<<mensaje<<endl;
+    puerto->sentMns(mensaje,client);
+
 }
 
 int SDSMemoryNode::parseToInt(string pInt)
@@ -156,96 +134,159 @@ void SDSMemoryNode::reciveMns(char * message){
     cout<<message<<endl;
     Document doc;
     doc.ParseInsitu(message);
-    assert(doc.IsObject());
-    assert(doc.HasMember("protocolo"));
-    assert(doc["protocolo"].IsString());
+   if(doc.IsObject()){
+       if(doc.HasMember("protocolo")){
+           if(doc["protocolo"].IsString()){
+               string comando;
+               comando=doc["protocolo"].GetString();
+               if(comando=="d_calloc"){
+                 if(doc.HasMember("pSize")){
+                 if(doc["pSize"].IsInt()){
+                 int pSize= doc["pSize"].GetInt();
+                 d_calloc(pSize);
+                 }
+                 }
+               }
 
 
-    string comando;
-    comando=doc["protocolo"].GetString();
-    if(comando=="d_calloc"){
-      assert(doc.HasMember("pSize"));
-      assert(doc["pSize"].IsInt());
-      int pSize= doc["pSize"].GetInt();
-      d_calloc(pSize);
-    }
+               else if(comando=="d_status"){
+                   d_status();
+
+               }
+               else{
+                  d_pointer_size pointerSize;
+                  if(doc.HasMember("dir")){
+                  if(doc["dir"].IsInt()){
+                   int pDir= doc["dir"].GetInt();
+                   pointerSize.pointer.dirMemory=pDir;
+
+}
+                   }
+                   if(doc.HasMember("pSize")){
+                   if(doc["pSize"].IsInt()){
+                   int pSize= doc["pSize"].GetInt();
+                   pointerSize.bytes=pSize;
+}
+                   }
 
 
-    else if(comando=="d_status"){
-        d_status();
+                   if(comando=="d_free"){
 
-    }
-    else{
+                        d_free(pointerSize);
+                    }
+                   else{
 
-        assert(doc.HasMember("dir"));
-        assert(doc["dir"].IsInt());
-        int pDir= doc["dir"].GetInt();
-
-        assert(doc.HasMember("pSize"));
-        assert(doc["pSize"].IsInt());
-        int pSize= doc["pSize"].GetInt();
+//Documento para en caso de que se quiera obtener el dato
+                       StringBuffer s;
+                       Writer<StringBuffer> writer(s);
+                       writer.StartObject();
+                       writer.String("dato");
 
 
-        d_pointer_size pointerSize;
-        pointerSize.bytes=pSize;
-        pointerSize.pointer.dirMemory=pDir;
+                     int status;
+                     bystream statusBystream;
+                      if(doc.HasMember("tipo")){
+                      if(doc["tipo"].IsString()){
+                      string tipo= doc["tipo"].GetString();
 
-       if(comando=="d_set"){
-          int status;
-           assert(doc.HasMember("tipo"));
-           assert(doc["tipo"].IsString());
-           string tipo= doc["tipo"].GetString();
-            assert(doc.HasMember("dato"));
+                           if(tipo=="char"){
 
-           if(tipo=="char"){
-               assert(doc["dato"].IsString());
-              //Parsear a char
-                const char* pData =doc["dato"].GetString();
-                status= Manejador.setearDatoChar(pointerSize,pData);
+                                 if(comando=="d_set"){
+                                      if(doc.HasMember("dato")){
+                                          if(doc["dato"].IsString()){
+                                         //Parsear a char
+
+                                           char pData =*(const_cast<char *>(doc["dato"].GetString()));
+                                           status= Manejador.setearDatoChar(pointerSize,pData);
+                                          }
+                                      }
+
+                                 }
+                                if(comando=="d_get"){
+                                    statusBystream=Manejador.obtenerDatoChar(pointerSize);
+                                    writer.String(&(statusBystream.datachar));
+
+
+                                 }
+
+
+                           }
+                           else if(tipo=="int"){
+
+                                if(comando=="d_set"){
+                                    if(doc.HasMember("dato")){
+                                    if(doc["dato"].IsInt()){
+                                     //Parsear a int
+                                     int pData =doc["dato"].GetInt();
+                                     status= Manejador.setearDatoInt(pointerSize,pData);
+                                    }
+                                    }
+                                }
+                               if(comando=="d_get"){
+
+                                   statusBystream=Manejador.obtenerDatoInt(pointerSize);
+                                   writer.Int(statusBystream.dataint);
+
+                                }
+
+
+                           }
+                           else if(tipo=="bool"){
+                       //Parsear a bool
+                                 //status= Manejador.setearDatoBool(pointerSize,pData);
+                           }
+                           else if(tipo=="float"){
+                       //parsear a float
+                                // status= Manejador.setearDatoFloat(pointerSize,pData);
+
+                           }
+                           else if(tipo=="arrayint"){
+                       //parsear a arreglo de int
+                                // status= Manejador.setearDatoArrayInt(pointerSize,pData);
+                           }
+                           else if(tipo=="arraychar"){
+                       //Parsear a arreglos de char
+                                 //status= Manejador.setearDatoArrayChar(pointerSize,pData);
+                           }
+                           else if(tipo=="long"){
+                       //Parsear a long
+                                // status= Manejador.setearDatoLong(pointerSize,pData);
+                           }
+                           else if(tipo=="double"){
+                       //Parsear a double
+                                // status= Manejador.setearDatoDouble(pointerSize,pData);
+                           }
+                           if(comando=="d_set"){
+                              d_set(status);
+
+                           }
+                          if(comando=="d_get"){
+                              writer.String("status");
+                              writer.Int(statusBystream.status);
+                              writer.EndObject();
+                              const char* mensaje=s.GetString();
+                              cout<<"Enviando... "<<mensaje<<endl;
+                              puerto->sentMns(mensaje,client);
+
+                           }
+
+
+                      }}
+
+
+
+                   }
+
+
+
+               }
            }
-           else if(tipo=="int"){
-               assert(doc["dato"].IsInt());
-                //Parsear a int
-                int pData =doc["dato"].GetInt();
-                status= Manejador.setearDatoInt(pointerSize,pData);
-           }
-           else if(tipo=="bool"){
-       //Parsear a bool
-                 //status= Manejador.setearDatoBool(pointerSize,pData);
-           }
-           else if(tipo=="float"){
-       //parsear a float
-                // status= Manejador.setearDatoFloat(pointerSize,pData);
 
-           }
-           else if(tipo=="arrayint"){
-       //parsear a arreglo de int
-                // status= Manejador.setearDatoArrayInt(pointerSize,pData);
-           }
-           else if(tipo=="arraychar"){
-       //Parsear a arreglos de char
-                 //status= Manejador.setearDatoArrayChar(pointerSize,pData);
-           }
-           else if(tipo=="long"){
-       //Parsear a long
-                // status= Manejador.setearDatoLong(pointerSize,pData);
-           }
-           else if(tipo=="double"){
-       //Parsear a double
-                // status= Manejador.setearDatoDouble(pointerSize,pData);
-           }
-            d_set(pointerSize,status);
 
-        }
-       if(comando=="d_get"){
+       }
 
-        d_get(pointerSize);
-        }
-       if(comando=="d_free"){
+   }
 
-            d_free(pointerSize);
-        }
-    }
 
 
 }
@@ -258,7 +299,7 @@ SDSMemoryNode::~SDSMemoryNode(){
 
 
 
-void SDSMemoryNode::d_set(d_pointer_size pSet, int pStatus)
+void SDSMemoryNode::d_set(int pStatus)
 {
     int status=pStatus;
     StringBuffer s;
