@@ -158,7 +158,7 @@ int MemoryMannager::setearDatoChar(d_pointer_size pPointerSize, bystream pData)
         status=0;
     }
     else{
-        *puntero=dato;
+        *puntero=*(const_cast<char *>(dato));
         status=1;
     }
     return status;
