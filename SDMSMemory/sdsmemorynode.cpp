@@ -14,18 +14,44 @@ void SDSMemoryNode::start(int Puerto, int Puerto_status)
     SDSMemoryServer::start();
 }
 
-d_pointer SDSMemoryNode::Parse_dpinter(Document mns){
-    assert(mns.IsObject());
+d_pointer SDSMemoryNode::Parse_dpinter(string mns){
+//    assert(mns.IsObject());
     d_pointer new_dpointer;
-    new_dpointer.dirMemory=mns["address"].GetInt();
+//    new_dpointer.dirMemory=mns["address"].GetInt();
 
     //new_dpointer.flag_espacio=mns["espacio"].GetBool();
     return new_dpointer;
 
 }
-d_pointer_size SDSMemoryNode::Parse_dpinter_size(Document mns){
-    d_pointer_size new_dpointersize;
-    return new_dpointersize;
+d_pointer_size SDSMemoryNode::Parse_dpinter_size(string mns){
+
+    string strPsize;
+    string strDir;
+    strDir=parseDelimitador(&mns);
+    strPsize= mns.substr(0,mns.find(DELIMITADOR));
+
+    int pSize=parseToInt(strPsize);
+
+    int pDir=parseToInt(strDir);
+
+    d_pointer_size pointerSize;
+    pointerSize.bytes=pSize;
+    pointerSize.pointer.dirMemory=pDir;
+
+    return pointerSize;
+
+}
+
+bystream SDSMemoryNode::Parse_bystream(string *mns)
+{
+    string strData;
+    string strType;
+    strData=parseDelimitador(mns);
+    strType= parseDelimitador(mns);
+    bystream Dato;
+    Dato.data=strData;
+    Dato.type=strType;
+    return Dato;
 
 }
 
@@ -48,9 +74,50 @@ void SDSMemoryNode::d_calloc(int pSize)
     puerto->sentMns(mensaje,client);
 }
 
+void SDSMemoryNode::d_free(d_pointer_size free)
+{
+    int status= Manejador.liberarMemoria(free);
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
+
+    writer.StartObject();
+    writer.String("status");
+    writer.Int(status);
+
+
+
+    writer.EndObject();
+    const char* mensaje=s.GetString();
+    cout<<"Enviando... "<<mensaje<<endl;
+    puerto->sentMns(mensaje,client);
+}
+
+void SDSMemoryNode::d_get(d_pointer_size get)
+{
+
+}
+
 void SDSMemoryNode::d_status()
 {
     Manejador.status();
+}
+
+int SDSMemoryNode::parseToInt(string pInt)
+{
+    istringstream buffer(pInt);
+    int num;
+    buffer >> num;
+    return num;
+}
+
+string SDSMemoryNode::parseDelimitador(string* pString)
+{
+
+    string strData;
+    strData=pString->substr(0,pString->find(DELIMITADOR));
+    pString->erase(0,pString->find(DELIMITADOR)+1);
+    return strData;
+
 }
 
 SDSMemoryNode::SDSMemoryNode(int cantidad, char exponente, int puerto, int puerto_status)
@@ -92,41 +159,18 @@ void SDSMemoryNode::newClient(int id, int Puerto)
 void SDSMemoryNode::reciveMns(string message){
     string comando;
     //cout<<" protocolo "<<mensaje<<" tamano "<<mensaje.length()<<endl;
-    comando = message->substr(0,message->find(DELIMITADOR));
-    message->erase(0,message->find(DELIMITADOR)+1);
-
+    comando = parseDelimitador(&message);
     if(comando=="d_calloc"){
         string strPsize;
-        strPsize= message->substr(0,message->find(DELIMITADOR));
-        istringstream buffer(strPsize);
-        int pSize;
-        buffer >> pSize;
+        strPsize= message.substr(0,message.find(DELIMITADOR));
+       int pSize= parseToInt(strPsize);
         d_calloc(pSize);
     }
 
     else if(comando=="d_set"){
-        string strPsize;
-        string strDir;
-        string strData;
-        strDir=message->substr(0,message->find(DELIMITADOR));
-        message->erase(0,message->find(DELIMITADOR)+1);
-        strPsize= message->substr(0,message->find(DELIMITADOR));
-        message->erase(0,message->find(DELIMITADOR)+1);
-         strData= message->substr(0,message->find(DELIMITADOR));
-        istringstream buffer(strPsize);
-        int pSize;
-        buffer >> pSize;
-        istringstream bufferDir(strDir);
-        int pDir;
-        bufferDir >> pDir;
-        d_pointer_size pointerSize;
-        pointerSize.bytes=pSize;
-        pointerSize.pointer.dirMemory=pDir;
-        istringstream bufferData(strData);
-        int pData;
-        bufferData >> pData;
-        d_set(pointerSize,pData);
-
+        bystream Dato=Parse_bystream(&message);
+        d_pointer_size pointerSize = Parse_dpinter_size(message);
+        d_set(pointerSize,Dato);
 
     }
 
@@ -135,24 +179,15 @@ void SDSMemoryNode::reciveMns(string message){
 
     }
     else{
-        string strPsize;
-        string strDir;
-        strDir=message->substr(0,message->find(DELIMITADOR));
-        message->erase(0,message->find(DELIMITADOR)+1);
-        strPsize= message->substr(0,message->find(DELIMITADOR));
-        istringstream buffer(strPsize);
-        int pSize;
-        buffer >> pSize;
-        istringstream bufferDir(strDir);
-        int pDir;
-        bufferDir >> pDir;
-        d_pointer_size pointerSize;
-        pointerSize.bytes=pSize;
-        pointerSize.pointer.dirMemory=pDir;
-        if(comando=="d_get"){
-            d_get(pointerSize);
+
+
+        d_pointer_size pointerSize=Parse_dpinter_size(message);
+
+       if(comando=="d_get"){
+
+        d_get(pointerSize);
         }
-        if(comando=="d_free"){
+       if(comando=="d_free"){
 
             d_free(pointerSize);
         }
@@ -183,7 +218,7 @@ SDSMemoryNode::~SDSMemoryNode(){
 
 
 
-void SDSMemoryNode::d_set(d_pointer_size pSet, int pData)
+void SDSMemoryNode::d_set(d_pointer_size pSet, bystream pData)
 {
     int status= Manejador.setearDato(pSet,pData);
     StringBuffer s;

@@ -18,7 +18,10 @@ struct d_pointer_size{
     d_pointer pointer;
     int bytes;
 };
-
+struct bystream{
+    string type;
+    string data;
+};
 
 class MemoryMannager
 {
@@ -28,10 +31,19 @@ int memory;
        int offset;
        void* cantidadMemoria;
     d_pointer pedirMemoria(int pSize);
-    string liberarMemoria(string* pPointer);
+    int liberarMemoria(d_pointer_size pPointerSize);
     string obtenerDato(string* pPointer);
 
-    string setearDato(d_pointer_size pPointerSize, int pData);
+  int setearDato(d_pointer_size pPointerSize, bystream pData);
+   int setearDatoInt(d_pointer_size pPointerSize, bystream pData);
+   int setearDatoChar(d_pointer_size pPointerSize, bystream pData);
+   int setearDatoFloat(d_pointer_size pPointerSize, bystream pData);
+   int setearDatoBool(d_pointer_size pPointerSize, bystream pData);
+   int setearDatoArrayInt(d_pointer_size pPointerSize, bystream pData);
+   int setearDatoArrayChar(d_pointer_size pPointerSize, bystream pData);
+   int setearDatoLong(d_pointer_size pPointerSize, bystream pData);
+   int setearDatoDouble(d_pointer_size pPointerSize, bystream pData);
+
     string status();
     bool setMemory(int pSize);
 

@@ -29,14 +29,19 @@ private:
     void* memoria_reservada;
     char* id;
     void start(int Puerto,int Puerto_status);
-    d_pointer Parse_dpinter(Document  mns);
-    d_pointer_size Parse_dpinter_size(Document mns);
+    d_pointer Parse_dpinter(string  mns);
+    d_pointer_size Parse_dpinter_size(string mns);
+    bystream Parse_bystream(string* mns);
     void d_calloc(int pSize);
     void d_free(d_pointer_size free);
     void d_get(d_pointer_size get);
 
-    void d_set(d_pointer_size pSet, int pData);
+    void d_set(d_pointer_size pSet, bystream pData);
     void d_status();
+    int parseToInt(string pInt);
+    string parseDelimitador(string* pString);
+
+
 
 public:
     SDSMemoryNode(int cantidad,char exponente,int Puerto, int Puerto_status);

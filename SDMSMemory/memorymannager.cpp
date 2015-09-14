@@ -25,9 +25,20 @@ offset=offset-pSize;
 
 }
 
-string MemoryMannager::liberarMemoria(string *pPointer)
+int MemoryMannager::liberarMemoria(d_pointer_size pPointerSize)
 {
-return "";
+    int status;
+    int* puntero =(int*)(cantidadMemoria + pPointerSize.pointer.dirMemory);
+    if(puntero==NULL){
+        status=0;
+    }
+    else{
+        cout<<" dato liberado "<<*puntero<<endl;
+        *puntero=0;
+         cout<<" dato actual "<<*puntero<<endl;
+        status=1;
+    }
+    return status;
 
 
 }
@@ -74,13 +85,125 @@ int * puntero=(int*)cantidadMemoria+dirMemoryN;
 
 }
 
-string MemoryMannager::setearDato(d_pointer_size pPointerSize, int pData)
+int MemoryMannager::setearDato(d_pointer_size pPointerSize, bystream pData)
 {
-void* puntero=(int*)(cantidadMemoria + pPointerSize.pointer.dirMemory);
-*puntero=pData;
+
+
+int status;
+if(pData.type=="char"){
+
+     status= setearDatoChar(pPointerSize,pData);
+}
+else if(pData.type=="int"){
+
+     status= setearDatoInt(pPointerSize,pData);
+}
+else if(pData.type=="bool"){
+
+      status= setearDatoBool(pPointerSize,pData);
+}
+else if(pData.type=="float"){
+
+      status= setearDatoFloat(pPointerSize,pData);
+
+}
+else if(pData.type=="arrayint"){
+
+      status= setearDatoArrayInt(pPointerSize,pData);
+}
+else if(pData.type=="arraychar"){
+
+      status= setearDatoArrayChar(pPointerSize,pData);
+}
+else if(pData.type=="long"){
+
+      status= setearDatoLong(pPointerSize,pData);
+}
+else if(pData.type=="double"){
+
+      status= setearDatoDouble(pPointerSize,pData);
+}
+
+return status;
 
 
 
+}
+
+int MemoryMannager::setearDatoInt(d_pointer_size pPointerSize, bystream pData)
+{
+    int status;
+    //Parsear a int
+    istringstream bufferN(pData.data);
+     int dato;
+     bufferN >> dato;
+     int* puntero =(int*)(cantidadMemoria + pPointerSize.pointer.dirMemory);
+     if(puntero==NULL){
+         status=0;
+     }
+     else{
+         *puntero=dato;
+         status=1;
+     }
+     return status;
+}
+
+int MemoryMannager::setearDatoChar(d_pointer_size pPointerSize, bystream pData)
+{
+    //Parsear a char
+    const char* dato=pData.data.c_str();
+    int status;
+    char* puntero =(char*)(cantidadMemoria + pPointerSize.pointer.dirMemory);
+    if(puntero==NULL){
+        status=0;
+    }
+    else{
+        *puntero=dato;
+        status=1;
+    }
+    return status;
+}
+
+int MemoryMannager::setearDatoFloat(d_pointer_size pPointerSize, bystream pData)
+{
+    //Parsear a Float
+    int status;
+    return status;
+}
+
+int MemoryMannager::setearDatoBool(d_pointer_size pPointerSize, bystream pData)
+{
+    //Parsear a Bool
+    int status;
+    return status;
+}
+
+int MemoryMannager::setearDatoArrayInt(d_pointer_size pPointerSize, bystream pData)
+{
+    //Parsear a Arrray de enteros
+    int status;
+    return status;
+}
+
+int MemoryMannager::setearDatoArrayChar(d_pointer_size pPointerSize, bystream pData)
+{
+    //Parsear a Array de chars
+    int status;
+    return status;
+}
+
+int MemoryMannager::setearDatoLong(d_pointer_size pPointerSize, bystream pData)
+{
+    //Parsear a Long
+    int status;
+    return status;
+}
+
+int MemoryMannager::setearDatoDouble(d_pointer_size pPointerSize, bystream pData)
+{
+    //Parsear a Double
+    int status;
+    return status;
 }
 
 string MemoryMannager::status()
