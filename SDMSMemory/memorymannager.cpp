@@ -1,48 +1,22 @@
 #include "memorymannager.h"
 
-MemoryMannager::MemoryMannager()
-{
-}
+MemoryMannager::MemoryMannager(){}
 
-string MemoryMannager::pedirMemoria(string *pSize,string pDescriptor)
+d_pointer MemoryMannager::pedirMemoria(int pSize)
 {
-string size=pSize->substr(0,pSize->length());
-    istringstream buffer(size);
-     int sizeN;
-     buffer >> sizeN;
-     int* puntero=(int*)cantidadMemoria+direccion;
-     int **p=&puntero;
+d_pointer NewDpointer;
+NewDpointer.dirMemory=memory-offset;
+offset=offset-pSize;
 
-     cout<<" puntero "<<puntero<<" second "<<*p<<endl;
-     if(puntero==NULL){
+     if(offset<=0){
          cout<<"ERROR: -No se pudo hacer un d_calloc"<<endl;
-     return "1";
+         NewDpointer.status=false;
+     return NewDpointer;
      }
-     else{
-memory-=sizeN;
-stringstream bufferstr;
-
-
-bufferstr  << puntero;
-istringstream bufferDIr(bufferstr.str());
- int dirMemoryN;
- bufferDIr >> dirMemoryN;
-direccion+=dirMemoryN;
-         cout<<"Se ha reservado "<<sizeN<<" bytes de memoria"<<" en la direccion  "<<puntero<< " quedan "<<memory<<" de memoria "<<endl;
-
-
-          string retorno="0;";
-          retorno.append(pDescriptor);
-          retorno.append(";");
-         stringstream buffer;
-
-
-         buffer  << puntero;
-
-        retorno.append(buffer.str());
-         retorno.append(";");
-         cout<<" retorno "<<retorno<<endl;
-return retorno;
+     else{   
+           NewDpointer.status=true;
+           cout<<" resevacion con exito "<<endl;
+            return NewDpointer;
 
    }
 
@@ -53,41 +27,7 @@ return retorno;
 
 string MemoryMannager::liberarMemoria(string *pPointer)
 {
-
-         string descriptor= pPointer->substr(0,pPointer->find(DELIMITADOR));
-      pPointer->erase(0,pPointer->find(DELIMITADOR)+1);
-      string dirMemory= pPointer->substr(0,pPointer->find(DELIMITADOR));
-   pPointer->erase(0,pPointer->find(DELIMITADOR)+1);
-   string size=pPointer->substr(0,pPointer->find(DELIMITADOR));
-
-   istringstream buffer(dirMemory);
-    int dirMemoryN;
-    buffer >> dirMemoryN;
-int * puntero=(int*)cantidadMemoria+dirMemoryN;
-       if(puntero==NULL){
-           cout<<" no se ecuentra"<<endl;
-           return "2";
-
-       }else{
-            cout<<" direcion "<<puntero<<"ndo dir "<<*puntero<<endl;
-           *puntero=NULL;
-
-
-        istringstream  buffersize(size);
-            int sizeN;
-            buffersize >> sizeN;
-            memory+=sizeN;
-
-
-            cout<< " elimindado"<<endl;
-
-
-
-            return "0";
-       }
-
-
-
+return "";
 
 
 }
@@ -134,49 +74,11 @@ int * puntero=(int*)cantidadMemoria+dirMemoryN;
 
 }
 
-string MemoryMannager::setearDato(string *pPointer)
+string MemoryMannager::setearDato(d_pointer_size pPointerSize, int pData)
 {
-    string descriptor= pPointer->substr(0,pPointer->find(DELIMITADOR));
- pPointer->erase(0,pPointer->find(DELIMITADOR)+1);
- string dirMemory= pPointer->substr(0,pPointer->find(DELIMITADOR));
-pPointer->erase(0,pPointer->find(DELIMITADOR)+1);
-string size=pPointer->substr(0,pPointer->find(DELIMITADOR));
-pPointer->erase(0,pPointer->find(DELIMITADOR)+1);
+void* puntero=(int*)(cantidadMemoria + pPointerSize.pointer.dirMemory);
+*puntero=pData;
 
-string dato=pPointer->substr(0,pPointer->find(DELIMITADOR));
-istringstream buffer(dirMemory);
- int dirMemoryN;
- buffer >> dirMemoryN;
- cout<<" direccion "<<direccion<<" and "<<dirMemoryN<<" o "<<dirMemory<<endl;
-int * puntero=(int*)cantidadMemoria;
-    if(puntero==NULL){
-        cout<<" no se ecuentra"<<endl;
-        return "2";
-
-    }else{
-         cout<<" direcion "<<puntero<<"ndo dir "<<*puntero<<endl;
-         istringstream buffer(size);
-          int sizeN;
-          buffer >> sizeN;
-
-
- cout<<" xxxxxxxxxxxxxxxxxx "<<  *(puntero)<<endl;
-
-      istringstream bufferData(dato);
-       int dataN;
-       bufferData >> dataN;
-
-
-     *puntero=dataN;
-        cout<<" dato "<<  *(puntero)<<" pos "<<puntero<<endl;
-
-
-
-
-
-
-         return "0";
-    }
 
 
 }
@@ -191,12 +93,15 @@ string MemoryMannager::status()
     return totalmemory.str();
 }
 
-void MemoryMannager::setMemory(int pSize,void* pMemory)
+bool MemoryMannager::setMemory(int pSize)
 {
-    direccion=0;
+    cantidadMemoria=malloc(pSize);
+    offset=pSize;
     memory=pSize;
-    cantidadMemoria=pMemory;
-    cout<<" setear"<<memory<<"de  memoria"<<endl;
+    if(cantidadMemoria==NULL)
+        return false;
+    else
+        return true;
 }
 
 

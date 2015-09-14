@@ -12,9 +12,9 @@ protected:
     static void* runSockets(void* obj);
 public:
     SDSMemoryServer();
-    virtual void reciveMns(const char* mns);
+    virtual void reciveMns(string message);
     virtual void newClient(int id,int Puerto);
-    virtual void sentMns(const char* mns,int id);
+    virtual void sentMns(const char* mns);
     void start();
     virtual ~SDSMemoryServer();
 };

@@ -8,9 +8,10 @@ SocketServer::SocketServer(int puerto,SDSMemoryServer *server){
     flag_busy=false;
 }
 
-void SocketServer::sentMns(const char *mns)
+void SocketServer::sentMns(const char *mns,int id)
 {
-    //send(mns);
+    cout<<"en el socket "<<mns<<endl;
+    send(id,mns,strlen(mns),0);
 }
 /**
  * @brief SocketServer::crear_Socket
@@ -95,7 +96,7 @@ void SocketServer::closeSocket(){flag_listen=false;}
  * @param obj
  * @return
  */
-void *SocketServer::controladorCliente(void *obj){
+void *SocketServer::controladorCliente(void *obj){    
     dataSocket*data = (dataSocket*)obj;
     while(true){
         string mensaje;
@@ -111,9 +112,36 @@ void *SocketServer::controladorCliente(void *obj){
                 break;
             }
         }
-        const char* mns=&mensaje[0u];
-        //cout<<mensaje<<endl;
+        char* mns=&mensaje[0u];
+        data->server->reciveMns(mensaje);
+    /*
+    dataSocket*data = (dataSocket*)obj;
+    while(true){
+        char* mensaje,*mns;
+        while(true){
+            char buffer[1]={0};
+            int bytes = recv(data->descriptor,buffer,1,0);
+            if(mns==NULL)
+                mns=buffer;
+            else{
+                mensaje=mns;
+                mns=(char*)malloc(1+strlen(mensaje)+strlen(buffer));
+                strcpy(mns,mensaje);
+                strcat(mns,buffer);
+                cout<<"Mensaje mns: "<<mns<<endl;
+            }
+            if(bytes<=0){
+                close(data->descriptor);
+                pthread_exit(NULL);
+            }
+
+            if(bytes<1){
+                break;
+            }
+        }
+        cout<<"recibió: "<<mns<<endl;
         data->server->reciveMns(mns);
+        */
     }
     close(data->descriptor);
     pthread_exit(NULL);

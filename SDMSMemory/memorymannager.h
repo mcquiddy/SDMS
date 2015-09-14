@@ -11,8 +11,12 @@
 
 using namespace std;
 struct d_pointer{
-int IPv4;
-void* dirMemory;
+    int dirMemory;
+    bool status;
+};
+struct d_pointer_size{
+    d_pointer pointer;
+    int bytes;
 };
 
 
@@ -20,15 +24,16 @@ class MemoryMannager
 {
 public:
     MemoryMannager();
-       int memory;
-       int direccion;
+int memory;
+       int offset;
        void* cantidadMemoria;
-   string pedirMemoria(string *pSize,string pDescriptor);
+    d_pointer pedirMemoria(int pSize);
     string liberarMemoria(string* pPointer);
     string obtenerDato(string* pPointer);
-    string setearDato(string* pPointer);
+
+    string setearDato(d_pointer_size pPointerSize, int pData);
     string status();
-    void setMemory(int pSize,void* pMemory);
+    bool setMemory(int pSize);
 
 
 

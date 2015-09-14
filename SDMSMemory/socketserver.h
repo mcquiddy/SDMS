@@ -38,7 +38,7 @@ private:
 
 public:
     SocketServer(int puerto,SDSMemoryServer* Server);
-    void sentMns(const char* mns);
+    void sentMns(const char* mns,int id);
     void run();
     int get_puerto();
     void busy(bool flag);

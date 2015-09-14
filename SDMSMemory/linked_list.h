@@ -13,7 +13,7 @@
 using namespace std;
 
 template<typename T>
-class list {
+class lista {
 private:
 	Node<T>* head;
 	Node<T>* tail;
@@ -29,8 +29,8 @@ public:
     int length();
     T* serch(T data);
 	void print_list();
-	list();
-	virtual ~list();
+    lista();
+    virtual ~lista();
 
 };
 
@@ -38,7 +38,7 @@ template<typename T>
 /**
  * @brief list<T>::list
  */
-list<T>::list(){
+lista<T>::lista(){
 	head=NULL;
 	tail=NULL;
     Length=0;
@@ -48,7 +48,7 @@ template<typename T>
  * @brief list<T>::insert_head
  * @param new_data
  */
-void list<T>::insert_head(T new_data){
+void lista<T>::insert_head(T new_data){
 	Node<T> *newNode=new Node<T>(new_data);
 	if(this->head==NULL){
 		head=newNode;
@@ -68,7 +68,7 @@ template<typename T>
  * @brief list<T>::insert_tail
  * @param new_data
  */
-void list<T>::insert_tail(T new_data){
+void lista<T>::insert_tail(T new_data){
 	Node<T> *newNode=new Node<T>(new_data);
 	if(this->tail==NULL){
 		tail=newNode;
@@ -88,7 +88,7 @@ template<typename T>
  * @brief list<T>::delete_data
  * @param data
  */
-void list<T>::delete_data(T data){
+void lista<T>::delete_data(T data){
     if(this->Length!=0){
             Node<T>* temp=head->get_next();
             if((temp==NULL) & ((this->head->get_data())==data)){
@@ -141,7 +141,7 @@ template<typename T>
  * @param data
  * @return
  */
-bool list<T>::isInList(T data){
+bool lista<T>::isInList(T data){
 	bool save=false;
     if(this->Length>0){
 		Node<T>* temp=this->head;
@@ -161,7 +161,7 @@ template<typename T>
  * @param data
  * @return
  */
-T* list<T>::serch(T data){
+T* lista<T>::serch(T data){
 	if(this->isInList(data)){
 		Node<T>* temp=head;
 		Node<T>* result=NULL;
@@ -182,7 +182,7 @@ template<typename T>
  * @brief list<T>::get_head
  * @return
  */
-Node<T>* list<T>::get_head(){
+Node<T>* lista<T>::get_head(){
     return this->head;
 }
 
@@ -191,7 +191,7 @@ template<typename T>
  * @brief list<T>::get_tail
  * @return
  */
-Node<T>* list<T>::get_tail(){
+Node<T>* lista<T>::get_tail(){
     return this->tail;
 }
 
@@ -201,7 +201,7 @@ template<typename T>
  * @brief list<T>::length
  * @return
  */
-int list<T>::length(){
+int lista<T>::length(){
     return Length;
 }
 
@@ -209,7 +209,7 @@ template<typename T>
 /**
  * @brief list<T>::print_list
  */
-void list<T>::print_list(){
+void lista<T>::print_list(){
 	Node<T>* temp=this->head;
     cout<<"Cantidad de nodos: "<<this->Length<<endl;
 	while(temp!=NULL){
@@ -222,7 +222,7 @@ template<typename T>
 /**
  * @brief list<T>::~list
  */
-list<T>::~list(){
+lista<T>::~lista(){
 	delete this;
 }
 #endif /* DOUBLELINKEDLIST_H_ */

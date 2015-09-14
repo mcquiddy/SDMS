@@ -2,9 +2,9 @@
 
 SDSMemoryServer::SDSMemoryServer(){}
 
-void SDSMemoryServer::reciveMns(const char* msn){}
+void SDSMemoryServer::reciveMns(string message){}
 void SDSMemoryServer::newClient(int id,int Puerto){}
-void SDSMemoryServer::sentMns(const char* mns,int id){}
+void SDSMemoryServer::sentMns(const char* mns){}
 
 void SDSMemoryServer::start(){
     pthread_t hilo_Puerto,hilo_PuertoStatus;
