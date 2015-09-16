@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<<<<<<< HEAD
-<!-- Written by QtCreator 3.1.1, 2015-09-07T17:14:44. -->
-=======
-<!-- Written by QtCreator 3.1.1, 2015-09-12T21:16:22. -->
->>>>>>> 7849e36ecacc585635bdd5c2e041fd7e56e76686
+<!-- Written by QtCreator 3.1.1, 2015-09-15T20:25:50. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -235,8 +231,8 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">SDMSMemory</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/santii/Proyecto1/SDMS/SDMSMemory/SDMSMemory.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">SDMSMemory2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/mcquiddy/git/SDMS/SDMSMemory/SDMSMemory.pro</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">SDMSMemory.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
@@ -258,7 +254,7 @@
  </data>
  <data>
   <variable>ProjectExplorer.Project.Updater.EnvironmentId</variable>
-  <value type="QByteArray">{b126acc1-50b8-4758-a059-cec358b3abb0}</value>
+  <value type="QByteArray">{c9ec7e01-bda4-43bb-810b-131015209a86}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.Updater.FileVersion</variable>

@@ -96,7 +96,7 @@ void SocketServer::closeSocket(){flag_listen=false;}
  * @param obj
  * @return
  */
-void *SocketServer::controladorCliente(void *obj){    
+void *SocketServer::controladorCliente(void *obj){
     dataSocket*data = (dataSocket*)obj;
     while(true){
 
