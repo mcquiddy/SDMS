@@ -25,7 +25,11 @@ SOURCES += main.cpp \
     memorymannager.cpp \
     sdsmemorynode.cpp \
     sdsmemoryserver.cpp \
-    socketserver.cpp
+    socketserver.cpp \
+    client.cpp \
+    dHeap.cpp \
+    dPointer.cpp \
+    server.cpp
 
 HEADERS += \
     constants_SDSM.h \
@@ -69,4 +73,8 @@ HEADERS += \
     rapidjson/rapidjson.h \
     rapidjson/reader.h \
     rapidjson/stringbuffer.h \
-    rapidjson/writer.h
+    rapidjson/writer.h \
+    client.h \
+    dHeap.h \
+    dPointer.h \
+    server.h
