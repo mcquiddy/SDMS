@@ -16,17 +16,31 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
+    d_pointer.cpp \
     d_pointer_size_type.cpp \
-    dint.cpp \
-    dobject.cpp \
+    darray.cpp \
     dchar.cpp \
+    dint.cpp \
     dlong.cpp \
-    darray.cpp
+    dobject.cpp
+
+    pointer.cpp \
+
+
+
+
 
 HEADERS += \
+    constants_SDSM.h \
+    d_pointer.h \
     d_pointer_size_type.h \
-    dint.h \
-    dobject.h \
+    darray.h \
     dchar.h \
+    dint.h \
     dlong.h \
-    darray.h
+    dobject.h \
+    linked_list.h \
+    Node.h \
+    pointer.h \
+
+
