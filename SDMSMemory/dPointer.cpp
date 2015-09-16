@@ -8,7 +8,7 @@
 #include "dPointer.h"
 
 dPointer::dPointer(char* type){
-	this->pType = type;
+    this->pType = type;
 
 };
 

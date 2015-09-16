@@ -13,15 +13,15 @@
 class dHeap {
 
 public:
-	char pFolder;
-	dPointer* vPointer;
-	dHeap(char path);
-	DLinked_List<int*> dDirections;
+    char pFolder;
+    dPointer* vPointer;
+    dHeap(char path);
+    DLinked_List<int*> dDirections;
 private:
 
-	void dFree(dPointer toFree);
-	void dMalloc(int size, char* type);
-	void connectMemNode();
+    void dFree(dPointer toFree);
+    void dMalloc(int size, char* type);
+    void connectMemNode();
 };
 
 

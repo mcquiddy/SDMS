@@ -10,8 +10,8 @@
 
 class dPointer {
 public:
-	dPointer(char* type);
-	char* pType;
+    dPointer(char* type);
+    char* pType;
 };
 
 #endif /* DPOINTER_H_ */

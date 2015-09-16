@@ -7,7 +7,7 @@
 #include "server.h"
 
 server::server(){
-	client = socket(AF_INET, SOCK_STREAM, 0);
+    client = socket(AF_INET, SOCK_STREAM, 0);
 
 }
 int server::StartServer(){

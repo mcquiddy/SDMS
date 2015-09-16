@@ -9,14 +9,14 @@
 #include "dPointer.h"
 
 dHeap::dHeap(char path){
-	pFolder = path;
+    pFolder = path;
 
 }
 
 void dHeap::dMalloc(int size, char* type){
 
-	this->vPointer = new dPointer(type);
-	this->vPointer->pType = type;
+    this->vPointer = new dPointer(type);
+    this->vPointer->pType = type;
 
 
 }
