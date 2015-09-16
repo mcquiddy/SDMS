@@ -1,12 +1,13 @@
 #include "sdsmemorynode.h"
-/**
- * @brief SDSMemoryNode::SDSMemoryNode
- * @param Cantidad
- * @param exponente
- * @param puerto
- * @param puerto_status
- */
 
+/*!
+ * \brief SDSMemoryNode::start
+ *        Inicializa los puertos y el servidor
+ * \param Puerto
+ *        Puerto donde se comunica las ordenes
+ * \param Puerto_status
+ *        Puerto donde solo retorna informacion ya definida
+ */
 void SDSMemoryNode::start(int Puerto, int Puerto_status)
 {
     this->puerto = new SocketServer(Puerto,this);
@@ -16,7 +17,16 @@ void SDSMemoryNode::start(int Puerto, int Puerto_status)
 
 
 
-
+/*!
+ * \brief SDSMemoryNode::d_calloc
+ *        Envia un mensaje al puerto emisor el json que se construyo al llamar
+ *        al manejador de memoria que reserva un espacio determinaod con pSize.
+ *
+ *
+ * \param pSize
+ *        tamaño de memoria a reservar.
+ *
+ */
 void SDSMemoryNode::d_calloc(int pSize)
 {
     d_pointer Dpointer= Manejador.pedirMemoria(pSize);
@@ -36,6 +46,12 @@ void SDSMemoryNode::d_calloc(int pSize)
     puerto->sentMns(mensaje,client);
 }
 
+/*!
+ * \brief SDSMemoryNode::d_free
+ *       Envia un mensaje al puerto emisor con el json formado, al liberar un espacio de memoria
+ * \param free
+ *       struct conformado por un int que es el tamaño y una direccion a liberar.
+ */
 void SDSMemoryNode::d_free(d_pointer_size free)
 {
     int status= Manejador.liberarMemoria(free);
@@ -55,6 +71,10 @@ void SDSMemoryNode::d_free(d_pointer_size free)
 }
 
 
+/*!
+ * \brief SDSMemoryNode::d_status
+ *        Envia un json conformado por lo datos retornados del manejador de memoria al pedir el estado de la memoria, al puerto
+ */
 void SDSMemoryNode::d_status()
 {
     d_estado estado=Manejador.status();
@@ -75,6 +95,14 @@ void SDSMemoryNode::d_status()
 
 }
 
+/*!
+ * \brief SDSMemoryNode::parseToInt
+ *        Parsea un string a un int
+ * \param pInt
+ *        string a parsear
+ * \return
+ *       int del string parseado
+ */
 int SDSMemoryNode::parseToInt(string pInt)
 {
     istringstream buffer(pInt);
@@ -83,6 +111,14 @@ int SDSMemoryNode::parseToInt(string pInt)
     return num;
 }
 
+/*!
+ * \brief SDSMemoryNode::parseDelimitador
+ *       Obtiene el string que esta en un determinado delimitador que esta en el mensaje
+ * \param pString
+ *       Mensaje a obtener el dato, definido por el DELIMITADOR
+ * \return
+ *       Dato obtenido en el parseo
+ */
 string SDSMemoryNode::parseDelimitador(string* pString)
 {
 
@@ -93,6 +129,18 @@ string SDSMemoryNode::parseDelimitador(string* pString)
 
 }
 
+/*!
+ * \brief SDSMemoryNode::SDSMemoryNode
+ *         Define el total de bytes a reservar
+ * \param cantidad
+ *        Cantidad de memeoria a reservar
+ * \param exponente
+ *        exponente de memoria a reservar ya sea en G(gigas) o M(megas)
+ * \param Puerto
+ *        Puerto donde se comunica las ordenes
+ * \param Puerto_status
+ *        Puerto donde solo retorna informacion ya definida
+ */
 SDSMemoryNode::SDSMemoryNode(int cantidad, char exponente, int puerto, int puerto_status)
 {
 
@@ -108,6 +156,15 @@ SDSMemoryNode::SDSMemoryNode(int cantidad, char exponente, int puerto, int puert
     else
         cout<<"ERROR: -No se reservó la memoria"<<endl;
 }
+
+/*!
+ * \brief SDSMemoryNode::newClient
+ *       Administra las conexiones de nuevos clientes al servidor
+ * \param id
+ *        id del nuevo cliente
+ * \param Puerto
+ *        Puerto donde se conecto
+ */
 void SDSMemoryNode::newClient(int id, int Puerto)
 {
     if(Puerto==this->puerto->get_puerto()){
@@ -125,9 +182,15 @@ void SDSMemoryNode::newClient(int id, int Puerto)
     else
         cout<<"ERROR: -No se reconoce el puerto-"<<endl;
 }
+
+
 /**
  * @brief SDSMemoryNode::reciveMns
+ *       Resive el mensaje que es un formato json, lo parsea y verifica cual orden es,despues
+ *       de verificar la orden parsea los datos entrantes y llama al metodo especificado por
+ *       la orden  o el protocolo.
  * @param mns
+ *       Mensaje en formato json
  */
 void SDSMemoryNode::reciveMns(char * message){
 
@@ -135,10 +198,14 @@ void SDSMemoryNode::reciveMns(char * message){
     Document doc;
     doc.ParseInsitu(message);
    if(doc.IsObject()){
+       // Verifica cual orden o accion se tiene que hacer
        if(doc.HasMember("protocolo")){
            if(doc["protocolo"].IsString()){
                string comando;
                comando=doc["protocolo"].GetString();
+           }
+           //Si la orden o protocolo es d_calloc, se obtiene el dato pSize, y se llama a que se reserve un espacio
+           //de memoria
                if(comando=="d_calloc"){
                  if(doc.HasMember("pSize")){
                  if(doc["pSize"].IsInt()){
@@ -148,13 +215,16 @@ void SDSMemoryNode::reciveMns(char * message){
                  }
                }
 
-
+ //Si la orden o protocolo es d_status se llama a que retorne es estado de memoria
                else if(comando=="d_status"){
                    d_status();
 
                }
                else{
+// Si no puede ser la orden de liberar memoria(d_free), obtener dato(d_get) o setear dato(d_set).
+// todos estos ordenes ocupa el struc pointerSize
                   d_pointer_size pointerSize;
+// obtiene la direcion de memoria del json y lo guarda en el pointerSize
                   if(doc.HasMember("dir")){
                   if(doc["dir"].IsInt()){
                    int pDir= doc["dir"].GetInt();
@@ -162,6 +232,7 @@ void SDSMemoryNode::reciveMns(char * message){
 
 }
                    }
+// obtiene la tamaño de memoria del json y lo guarda en el pointerSize
                    if(doc.HasMember("pSize")){
                    if(doc["pSize"].IsInt()){
                    int pSize= doc["pSize"].GetInt();
@@ -185,6 +256,7 @@ void SDSMemoryNode::reciveMns(char * message){
 
                      int status;
                      bystream statusBystream;
+//verifica el tipo que se va a setear o obtener
                       if(doc.HasMember("tipo")){
                       if(doc["tipo"].IsString()){
                       string tipo= doc["tipo"].GetString();
@@ -289,8 +361,11 @@ void SDSMemoryNode::reciveMns(char * message){
 
 
 
-}
 
+/*!
+ * \brief SDSMemoryNode::~SDSMemoryNode
+ * cierra los puertos y los libera de la memoria
+ */
 SDSMemoryNode::~SDSMemoryNode(){
     puerto->closeSocket();
     puerto_status->closeSocket();
@@ -298,7 +373,13 @@ SDSMemoryNode::~SDSMemoryNode(){
 }
 
 
-
+/*!
+ * \brief SDSMemoryNode::d_set
+ * Envia el json conformado por el estatus que se obtuvo al seteaer el dato, por mensaje al puerto emisor.
+ * \param pStatus
+ * 0, si el dato no se pudo setear ya que se estaba ingresando en una direccion de memoria indebida.
+ * 1, si el dato se pudo guardar correctamente.
+ */
 void SDSMemoryNode::d_set(int pStatus)
 {
     int status=pStatus;
