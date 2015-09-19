@@ -1,6 +1,7 @@
 #ifndef DOBJECT_H
 #define DOBJECT_H
 #include <string>
+#include <dobject.h>
 
 using namespace std;
 class dObject
@@ -8,9 +9,6 @@ class dObject
 {
 public:
     dObject();
-
-  //virtual void Oververload(string Type, string operador);
-
 
 };
 

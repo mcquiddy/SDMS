@@ -3,21 +3,30 @@
 #include <dint.h>
 #include <dchar.h>
 #include <dlong.h>
-#include <darray.h>
+#include </home/geovanny/git/SDMS/SDMSMemory/darray.h>
+#include <iostream>
+#include <QtNetwork/QNetworkInterface>
 
-#include <pointer.h>
-#include <d_pointer.h>
+
+
 #include </home/geovanny/git/SDMS/SDMSMemory/d_pointer_size_type.h>
 #include <dobject.h>
 
 
-//#include "sdsmemorynode.h"
-//#include "d_pointer_size_type.h"
+#include "sdsmemorynode.h"
+#include "d_pointer_size_type.h"
 #include "linked_list.h"
+#include <garbagecollector.h>
 
+
+using namespace std;
 char hola[7];
  int  main()
 {
+
+
+
+
 
  /*    QCoreApplication a(argc, argv);
    dInt p;
@@ -75,17 +84,65 @@ char hola[7];
     //return a.exec();
 */
 
+     dInt x,y,z;
+     x=2;
+     y=2;
+     z=3;
+     dChar a,b,c;
+     a='a';
+     b='b';
+     c='a';
 
-             lista<d_pointer_size_type> pPointers;
-             int i=0;
-             while(i<=10){
-                 d_pointer_size_type temp;
-                 temp.setReferences(i);
-                 pPointers.insert_head(temp);
-                 cout<<temp.getReferences()<<"\n";
-                 i++;
-         }
-             pPointers.print_list();
+
+     // x++;//sobrecarga para dInt
+
+
+     dArray g;
+
+      g [5];
+
+
+
+
+
+
+
+
+             lista<d_pointer_size_type*> *pInt=new  lista<d_pointer_size_type*> ;
+             d_pointer_size_type* temp1 = new d_pointer_size_type();
+
+             temp1->setPuntero(x);
+             temp1->setID(x);
+             temp1->setReferences(x);
+             (*temp1)--;
+             d_pointer_size_type* temp2 = new d_pointer_size_type();
+             temp2->setID(y);
+             temp2->setPuntero(y);
+             pInt->insert_head(temp1);
+             pInt->insert_tail(temp2);
+
+
+             // cout<<(pInt->get_head()->get_data()->getPuntero().x==pInt->get_head()->get_data()->getPuntero().x)<<"\n";
+
+
+             /*
+              * Codigo para ejecutar dChar
+             dChar x;
+             x='2';
+             cout<<x.x<<"\n";
+              */
+
+
+
+
+
+    /*Codigo para Ejecutar Garbage Collector
+     * GarbageCollector *test = new GarbageCollector(pInt);
+        test->run();
+       while (true){
+
+        }
+      */
 
 return 0;
  }

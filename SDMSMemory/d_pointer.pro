@@ -16,13 +16,13 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    d_pointer.cpp \
     d_pointer_size_type.cpp \
     darray.cpp \
     dchar.cpp \
     dint.cpp \
     dlong.cpp \
-    dobject.cpp
+    dobject.cpp \
+    garbagecollector.cpp
 
     pointer.cpp \
 
@@ -32,7 +32,6 @@ SOURCES += main.cpp \
 
 HEADERS += \
     constants_SDSM.h \
-    d_pointer.h \
     d_pointer_size_type.h \
     darray.h \
     dchar.h \
@@ -41,6 +40,6 @@ HEADERS += \
     dobject.h \
     linked_list.h \
     Node.h \
-    pointer.h \
+    garbagecollector.h
 
 

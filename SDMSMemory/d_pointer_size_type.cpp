@@ -1,24 +1,38 @@
 #include "d_pointer_size_type.h"
 
 
-d_pointer_size_type::d_pointer_size_type()
-{
+d_pointer_size_type::d_pointer_size_type(){
+//cout<< "Constructor build" ;
 
 
 }
-int d_pointer_size_type::getID() const
+dInt d_pointer_size_type::getID() const
 {
-    return ID;
+    return this->ID;
 }
 
-void d_pointer_size_type::setID(int value)
+void d_pointer_size_type::setID(dInt ID)
 {
-    ID = value;
+    this->ID=ID;
 }
 
+dInt d_pointer_size_type::getReferences() const
+{
+    return this->references;
+}
+
+void d_pointer_size_type::setReferences(dInt pReferences)
+{
+
+    this->references = pReferences;
+
+}
 void d_pointer_size_type::print()
 {
-    std::cout<< ID << "\n";
+    std::cout<< "ID: "<<this->ID.x << "\n";
+    std::cout<< "Puntero: "<< this->puntero.x << "\n";
+    std::cout<< "Reference: "<< this->references.x << "\n";
+
 }
 
 void d_pointer_size_type::operator=(const d_pointer_size_type& obj)
@@ -30,57 +44,64 @@ void d_pointer_size_type::operator=(const d_pointer_size_type& obj)
 
 void d_pointer_size_type::operator=(const dObject& obj){
 
-    cout<< "is dObject"<< "\n";
+    cout<< "Verificar que tamano de dObject sea compatible con el reservado"<< "\n";
 
 }
-void d_pointer_size_type::operator==(const d_pointer_size_type& obj){
-    if(this->getPuntero()==obj.getPuntero()){
-        cout<<"both pointers are pointing to same address"<<("/n");
+bool d_pointer_size_type::operator==(const d_pointer_size_type& obj){
+    bool c=true;
+    if(this->puntero.x==obj.getPuntero().x){
+        //cout<<"both pointers are equals"<<("/n");
 
+    //return true;
     }
     else{
-        cout<<"pointers are pointing to different address"<<("/n");
+       // cout<<"both pointers are different"<<("/n");
+        c=false;
+
     }
-    cout<< "is dObject"<<( "\n");
+    //cout<< "is dObject"<<( "\n");
+    return c;
+}
+
+int d_pointer_size_type::operator++(int ){
+   puntero.x+=1;
 
 }
-int d_pointer_size_type::getPuntero() const
-{
+int d_pointer_size_type::operator--(int ){
+   puntero.x-=1;
+
+}
+
+dInt d_pointer_size_type::getPuntero() const{
     return puntero;
 }
 
 
-void d_pointer_size_type::setPuntero(int value)
+void d_pointer_size_type::setPuntero(dInt value)
 {
     puntero = value;
 }
-int d_pointer_size_type::getSize() const
+dInt d_pointer_size_type::getSize() const
 {
     return size;
 }
 
-void d_pointer_size_type::setSize(int value)
+void d_pointer_size_type::setSize(dInt value)
 {
     size = value;
 }
-char *d_pointer_size_type::getDataType() const
+dChar d_pointer_size_type::getDataType()
 {
     return dataType;
 }
 
-void d_pointer_size_type::setDataType(char *value)
+void d_pointer_size_type::setDataType(dChar value)
 {
     dataType = value;
 }
-int d_pointer_size_type::getReferences() const
-{
-    return references;
-}
 
-void d_pointer_size_type::setReferences(int value)
-{
-    references = value;
-}
+
+
 
 
 

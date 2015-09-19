@@ -2,44 +2,45 @@
 #define D_POINTER_SIZE_TYPE_H
 #include<dobject.h>
 #include <iostream>
+#include <QObject>
+#include <dint.h>
+#include <dchar.h>
 
 
-class d_pointer_size_type  : public dObject
+class d_pointer_size_type : public dObject
 {
 public:
     d_pointer_size_type();
 
-    int getID() const;
-    void setID(int value);
-
+    dInt getID() const;
+    void setID(dInt value);
+    dInt getReferences() const;
+    void setReferences(dInt pReferences);
 
     void  print();
 
     void operator=(const d_pointer_size_type& obj);
     void operator=(const dObject& obj);
-    void operator==(const d_pointer_size_type& obj);
-    //void operator=(const example& obj);
-    int getPuntero() const;
-    void setPuntero(int value);
+    bool operator==(const d_pointer_size_type& obj);
 
-    int getSize() const;
-    void setSize(int value);
+    int operator++(int);
+    int operator--(int);
+    dInt getPuntero() const;
+    void setPuntero(dInt value);
 
-    char *getDataType() const;
-    void setDataType(char *value);
+    dInt  getSize() const;
+    void setSize(dInt value);
 
-    int getReferences() const;
-    void setReferences(int value);
+    dChar getDataType() ;
+    void setDataType(dChar value);
+
 
 private:
-    int ID=0;
-    int puntero=0;
-    int size =0;
-    char *dataType="int";
-    int references;
-    //dpointer pointer;
-
-
+    dInt references;
+    dInt ID;
+    dInt puntero;
+    dInt size;
+    dChar dataType;
 
 
 };

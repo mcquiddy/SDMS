@@ -1,6 +1,7 @@
 #ifndef DINT_H
 #define DINT_H
 #include <iostream>
+#include <dobject.h>
 
 
 /**
@@ -8,15 +9,22 @@
  * */
 
 
-class dInt
+class dInt: public dObject
 {
 public:
     dInt();
-    int x;
+
     dInt& operator = ( const int &p);
+    bool& operator==(const int& obj);
+    bool& operator==(const dInt& obj);
+    void operator++(int );
+    void operator--(int );
+    int x;
+
 
      //void operator << (const dInt &p);
-private:
+//private:
+
 
 };
 

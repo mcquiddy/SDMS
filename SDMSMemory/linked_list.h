@@ -24,6 +24,7 @@ public:
 	void insert_tail(T new_data);
 	void delete_data(T data);
 	bool isInList(T data);
+    Node<T>* rove(int x);
     Node<T>* get_head();
     Node<T>* get_tail();
     int length();
@@ -31,6 +32,8 @@ public:
 	void print_list();
     lista();
     virtual ~lista();
+
+    void delete_Pos(int x);
 
 };
 
@@ -89,7 +92,7 @@ template<typename T>
  * @param data
  */
 void lista<T>::delete_data(T data){
-    if(this->Length!=0){
+    if(this->Length!=0){//se cumple en caso que  solo existe un nodo(head)
             Node<T>* temp=head->get_next();
             if((temp==NULL) & ((this->head->get_data())==data)){
                 delete head;
@@ -100,7 +103,7 @@ void lista<T>::delete_data(T data){
             }
             else{
                 Node<T>* NextTemp=temp->get_next();
-                if(this->head->get_data()==data){
+                if(this->head->get_data()==data){//se cumple en caso que el nodo a eliminar sea el head
                     temp=head->get_next();
                     delete head;
                     head=temp;
@@ -141,20 +144,40 @@ template<typename T>
  * @param data
  * @return
  */
-bool lista<T>::isInList(T data){
-	bool save=false;
-    if(this->Length>0){
-		Node<T>* temp=this->head;
-        while(temp!=NULL){
-            if(temp->get_data()==data){
-                save=true;
-                break;
-            }
+ Node<T>* lista<T>::rove(int x){
+    Node<T>* temp=this->head;
+    if(this->Length>=0 && x<=this->length()){
+
+        for(int i=1;i<x;i++){
+
             temp=temp->get_next();
+
 		}
 	}
-	return save;
+    else{
+       temp=NULL;
+
+    }
+
+    return temp;
 }
+template<typename T>
+ bool lista<T>::isInList(T data){
+     bool save=false;
+     if(this->Length>0){
+         Node<T>* temp=this->head;
+         while(temp!=NULL){
+             if(temp->get_data()==data){
+                 save=true;
+                 break;
+             }
+             temp=temp->get_next();
+         }
+     }
+
+     return save;
+ }
+
 template<typename T>
 /**
  * @brief list<T>::serch
@@ -163,19 +186,74 @@ template<typename T>
  */
 T* lista<T>::serch(T data){
 	if(this->isInList(data)){
-		Node<T>* temp=head;
-		Node<T>* result=NULL;
+        Node<T>* temp=head;
+        Node<T>* result=NULL;
 		while(temp->get_next()!=NULL){
-			if(temp->get_data()==data){
-				result=data;
+            if(temp->get_data()==data){
+                result=data;
 			}
 		}
-		return result;
+        return result;
 	}
 	else{
 		return NULL;
 	}
 }
+
+
+template<typename T>
+/**
+ * @brief list<T>::delete_Pos
+ * @param x
+ */
+void lista<T>::delete_Pos(int x){
+    if(this->Length!=0 && x<=this->length()){//se cumple en caso que  solo existe un nodo(head)
+            Node<T>* temp=head->get_next();
+            if((temp==NULL) & (x==1)){
+                delete head;
+                head=NULL;
+                tail=NULL;
+                Length=0;
+            }
+            else{
+
+                if(x==1){//se cumple en caso que el nodo a eliminar sea el head
+                    temp=head->get_next();
+                    delete head;
+                    head=temp;
+                    head->set_prev(NULL);
+                    this->Length--;
+
+                    //cout<<"delete data: "<<data<<"In head"<<endl;
+                }
+                else if(x==this->length()){
+                    temp=tail->get_prev();
+                    delete tail;
+                    tail=temp;
+                    temp->set_next(NULL);
+                    this->Length--;
+                    //cout<<"delete data: "<<data<<"In tail"<<endl;
+                }
+                else{
+                    temp=head;
+                 for(int i=1; i<=x;i++){
+                    if(i==x){
+                        temp->get_prev()->set_next(temp->get_next());
+                        temp->get_next()->set_prev(temp->get_prev());
+                        delete temp;
+                        this->Length--;
+                        //cout<<"Data "<<data<<" deleted"<<endl;
+                    }
+                    else{
+                        temp=temp->get_next();
+                    }
+
+                }
+                }
+            }
+    }
+}
+
 
 template<typename T>
 /**
