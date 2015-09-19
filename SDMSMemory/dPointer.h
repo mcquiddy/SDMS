@@ -8,8 +8,14 @@
 #ifndef DPOINTER_H_
 #define DPOINTER_H_
 
+
 class dPointer {
 public:
+    string type;
+    string data;
+    int ref;
+    int DirectionPointer;
+    int pSize;
     dPointer(char* type);
     char* pType;
 };
