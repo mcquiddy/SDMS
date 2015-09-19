@@ -23,6 +23,12 @@ using namespace std;
 char hola[7];
  int  main()
 {
+ /*!
+CODIGO DE SANTI  Y CRISTIAN!!!!!
+
+SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7008,7001);
+       nodeMemory->~SDSMemoryNode();
+   */
 
 
 

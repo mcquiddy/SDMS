@@ -19,16 +19,16 @@ using namespace std;
 class client{
 
 public:
-	int pClient;
-	bool isExit=false;
+    int pClient;
+    bool isExit=false;
     int	portNum = 8089;
     const char* ip = "192.168.1.114";
-	int	bufsize = 1024;
+    int	bufsize = 1024;
     char buffer[1024];
 
-	struct sockaddr_in server_addr;
-	    client();
-	    int StartClient();
+    struct sockaddr_in server_addr;
+        client();
+        int StartClient();
 };
 
 

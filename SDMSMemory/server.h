@@ -17,17 +17,17 @@
 using namespace std;
 class server{
 public:
-	  	int client, pServer;
+        int client, pServer;
         int portNum = 8089;
         int bufsize = 1024;
-	    bool isExit = false;
+        bool isExit = false;
         char buffer[1024];
 
-	    struct sockaddr_in server_addr;
-	    socklen_t size;
+        struct sockaddr_in server_addr;
+        socklen_t size;
 
-	    server();
-	    int StartServer();
+        server();
+        int StartServer();
 
 
 

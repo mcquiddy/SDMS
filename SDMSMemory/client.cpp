@@ -7,7 +7,7 @@
 #include "client.h"
 
 client::client(){
-	pClient = socket(AF_INET, SOCK_STREAM, 0);
+    pClient = socket(AF_INET, SOCK_STREAM, 0);
 }
 
 int client::StartClient(){
