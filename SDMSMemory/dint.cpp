@@ -3,19 +3,31 @@
 dInt::dInt()
 {
 
+
 struct dInt;
 
 }
+ void operator<<(ostream& os,const dInt& dt){
+    os << *dt.x<<"\n";
 
+}
+dInt& dInt::operator = (const dInt &p){
 
-dInt& dInt::operator = (const int& p){
-   this->x = p;
+    this->x = p.x;
+
    return *this;
 
 }
+dInt& dInt::operator = (const int& p){
+   *this->x = p;
+
+   return *this;
+
+}
+
 bool& dInt::operator==(const int& obj){
      bool c= true;
-     if(this->x==obj){
+     if(*this->x==obj){
         cout<<"son iguales"<<"\n";
      }
      else{

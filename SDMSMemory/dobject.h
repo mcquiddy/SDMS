@@ -2,6 +2,8 @@
 #define DOBJECT_H
 #include <string>
 #include <dobject.h>
+#include <cstdio>
+#include <cstdlib>
 
 using namespace std;
 class dObject

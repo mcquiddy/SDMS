@@ -5,7 +5,8 @@
 #include <QObject>
 #include <dint.h>
 #include <dchar.h>
-
+#include <stdio.h>
+#include <stdlib.h>
 
 class d_pointer_size_type : public dObject
 {
@@ -25,6 +26,7 @@ public:
 
     int operator++(int);
     int operator--(int);
+    
     dInt getPuntero() const;
     void setPuntero(dInt value);
 
@@ -36,13 +38,12 @@ public:
 
 
 private:
-    dInt references;
-    dInt ID;
-    dInt puntero;
-    dInt size;
-    dChar dataType;
-
-
+    dInt* ID= (dInt*)calloc(1,2*sizeof(int));//dInt is assigned to the size of 2 Bytes
+    dInt* puntero= (dInt*)calloc(1,2*sizeof(int));//puntero is assigned to the size of 2 Bytes
+    dInt* size= (dInt*)calloc(1,2*sizeof(int));//size is assigned to the size of 2 Bytes
+    dChar* dataType=(dChar*)calloc(1,sizeof(char));// dataType is assigned to the size of 1 Byte
+    dInt* references=(dInt*)calloc(1,sizeof(char));// reference is assigned to the size of 1 Byte
+    //d_pointer lack variable
 };
 
 #endif // D_POINTER_SIZE_TYPE_H

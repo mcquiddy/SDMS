@@ -9,19 +9,23 @@ struct dArray;
 
 }
 
-dChar& dChar::operator = (const dChar &c){
-   this->x = c.x;
-    return *this;
+void operator<<(ostream& os,const dChar& dc){
+   os << *dc.x<<"\n";
+
 }
-dChar& dChar::operator = ( const char& c){
-   this->x = c;
-    return *this;
+void dChar::operator =(const dChar c){
+   *this->x = *c.x;
+
+}
+void dChar::operator = ( const char c){
+   *this->x = c;
+
 }
 
 
 bool& dChar::operator==(const char& obj){
      bool c= true;
-     if(this->x==obj){
+     if(*this->x==obj){
         //cout<<"son iguales"<<"\n";
      }
      else{

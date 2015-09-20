@@ -2,6 +2,7 @@
 
 
 
+
 dLong::dLong()
 {
     struct dLong;

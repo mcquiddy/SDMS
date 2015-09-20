@@ -6,40 +6,34 @@ d_pointer_size_type::d_pointer_size_type(){
 
 
 }
-dInt d_pointer_size_type::getID() const
-{
-    return this->ID;
+dInt d_pointer_size_type::getID() const{
+    return *this->ID;
 }
 
 void d_pointer_size_type::setID(dInt ID)
 {
-    this->ID=ID;
+    *this->ID=ID;
 }
 
-dInt d_pointer_size_type::getReferences() const
-{
-    return this->references;
+
+dInt d_pointer_size_type::getReferences() const{
+    return *this->references;
 }
 
 void d_pointer_size_type::setReferences(dInt pReferences)
 {
 
-    this->references = pReferences;
+    *this->references = pReferences;
 
 }
-void d_pointer_size_type::print()
-{
-    std::cout<< "ID: "<<this->ID.x << "\n";
-    std::cout<< "Puntero: "<< this->puntero.x << "\n";
-    std::cout<< "Reference: "<< this->references.x << "\n";
-
+void d_pointer_size_type::print(){
+    std::cout<< "ID: "<< this->getID().x << "\n";
+    std::cout<< "Puntero: "<< this->puntero->x << "\n";
+    std::cout<< "Reference: "<< this->references->x << "\n";
 }
 
-void d_pointer_size_type::operator=(const d_pointer_size_type& obj)
-{
+void d_pointer_size_type::operator=(const d_pointer_size_type& obj){
      this->setID(obj.getID());
-
-
 }
 
 void d_pointer_size_type::operator=(const dObject& obj){
@@ -49,7 +43,7 @@ void d_pointer_size_type::operator=(const dObject& obj){
 }
 bool d_pointer_size_type::operator==(const d_pointer_size_type& obj){
     bool c=true;
-    if(this->puntero.x==obj.getPuntero().x){
+    if(this->puntero->x==obj.getPuntero().x){
         //cout<<"both pointers are equals"<<("/n");
 
     //return true;
@@ -64,40 +58,40 @@ bool d_pointer_size_type::operator==(const d_pointer_size_type& obj){
 }
 
 int d_pointer_size_type::operator++(int ){
-   puntero.x+=1;
+   puntero->x+=1;
 
 }
 int d_pointer_size_type::operator--(int ){
-   puntero.x-=1;
+   puntero->x-=1;
 
 }
 
 dInt d_pointer_size_type::getPuntero() const{
-    return puntero;
+    return *puntero;
 }
 
 
 void d_pointer_size_type::setPuntero(dInt value)
 {
-    puntero = value;
+    *puntero = value;
 }
 dInt d_pointer_size_type::getSize() const
 {
-    return size;
+    return *size;
 }
 
 void d_pointer_size_type::setSize(dInt value)
 {
-    size = value;
+    *size = value;
 }
 dChar d_pointer_size_type::getDataType()
 {
-    return dataType;
+    return *dataType;
 }
 
 void d_pointer_size_type::setDataType(dChar value)
 {
-    dataType = value;
+    *dataType = value;
 }
 
 

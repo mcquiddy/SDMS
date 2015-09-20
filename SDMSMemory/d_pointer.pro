@@ -23,6 +23,8 @@ SOURCES += main.cpp \
     dlong.cpp \
     dobject.cpp \
     garbagecollector.cpp
+    dheap.cpp  \
+
 
     pointer.cpp \
 
@@ -40,6 +42,8 @@ HEADERS += \
     dobject.h \
     linked_list.h \
     Node.h \
-    garbagecollector.h
+    garbagecollector.h \
+    rapidjson/stringbuffer.h
+    dheap.h  \
 
 

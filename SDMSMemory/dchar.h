@@ -7,14 +7,17 @@ class dChar: public dObject
 public:
     dChar();
 
-    char x;
+
 
 bool& operator==(const char& obj);
 bool& operator==(const dChar& obj);
-     dChar& operator = (const char &c);
-     dChar& operator = (const dChar &c);
+void operator = (const char c);
+void operator = (const dChar c);
+friend void operator<<(ostream& os, const dChar& dc);
 
+private:
 
+char* x = (char*)calloc(1,sizeof(char));
 };
 
 #endif // DCHAR_H
