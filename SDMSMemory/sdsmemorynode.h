@@ -30,6 +30,10 @@ private:
     char* id;
     void start(int Puerto,int Puerto_status);
 
+    void actualizar();
+    void informar(char *IP, int puerto);
+    char* getAddresss();
+
 
     void d_calloc(int pSize);
     void d_free(d_pointer_size free);
