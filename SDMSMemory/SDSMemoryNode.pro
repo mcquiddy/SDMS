@@ -69,4 +69,6 @@ HEADERS += \
     dlong.h \
     dobject.h \
     sdsmemoryserver.h \
-    socketserver.h
+    socketserver.h \
+    NodeTree.h \
+    TreeBinary.h
