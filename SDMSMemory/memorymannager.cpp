@@ -49,14 +49,22 @@ offset=offset-pSize;
 int MemoryMannager::liberarMemoria(d_pointer_size pPointerSize)
 {
     int status;
-    int* puntero =(int*)(cantidadMemoria + pPointerSize.pointer.dirMemory);
+    char* puntero =(char*)(cantidadMemoria + pPointerSize.pointer.dirMemory);
+
     if(puntero==NULL){
         status=0;
     }
     else{
-        cout<<" dato liberado "<<*puntero<<endl;
-        *puntero=0;
-         cout<<" dato actual "<<*puntero<<endl;
+        int i = 0;
+            for (i = 0; i < pPointerSize.bytes; i++ )
+            {
+                if( char(*puntero)!=0 ){
+
+                *puntero=0;
+
+                }
+                puntero=(char*)(cantidadMemoria + (pPointerSize.pointer.dirMemory+i));
+            }
         status=1;
     }
     return status;
@@ -442,13 +450,13 @@ d_estado MemoryMannager::status()
 {
     cout<<" entro al estado "<<endl;
     d_estado estadoMemoria;
-    int* puntero=(int*)(cantidadMemoria);
+    char* puntero=(char*)(cantidadMemoria);
     int memoriaTotal=0;
     int chunkMemoria=0;
     int chunkMemoriaTemp=0;
     int count=0;
     while(count<memory){
-        if(*puntero==0){
+        if(char(*puntero)==0){
             chunkMemoriaTemp++;
              memoriaTotal++;
             chunkMemoria=chunkMemoriaTemp;
@@ -458,7 +466,7 @@ d_estado MemoryMannager::status()
         }
 
         count++;
-        puntero=(int*)(cantidadMemoria+count);
+        puntero=(char*)(cantidadMemoria+count);
     }
     estadoMemoria.biggerChunk=chunkMemoria;
     estadoMemoria.totalMemory=memoriaTotal;
