@@ -14,7 +14,10 @@
 class dHeap;
 using namespace std;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0bfc03cecd3bb36e7f3481b76e5c99b8a8422cfb
 struct dataSocketHeap{
     dHeap* server;
     int descriptor;

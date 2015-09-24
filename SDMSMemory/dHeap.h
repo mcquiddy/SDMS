@@ -24,32 +24,42 @@
 #include "socketserverHeap.h"
 #include "pthread.h"
 #include "socketclienteHeap.h"
+<<<<<<< HEAD
 #include <d_pointer_size_type.h>
+=======
+#include "pugiXML/pugixml.hpp"
+>>>>>>> 0bfc03cecd3bb36e7f3481b76e5c99b8a8422cfb
 
 using namespace std;
 using namespace rapidjson;
 
-
+struct NodoSDSM{
+    SocketClienteHeap* puerto;
+    SocketClienteHeap* status;
+    int id;
+};
 
 
 class dHeap
 {
 private:
+    static dHeap* unicdHeap;
+    static void* run(void* obj);
+    int contadorID;
 
-      static dHeap* unicdHeap;
-      static void* run(void* obj);
-      SocketServerHeap * newSDSM;
+    SocketServerHeap * newSDSM;
+    SocketServerHeap * newStatus;
 
     char pFolder;
     lista<string> pNodes;
     dPointer* vPointer;
-
     lista<dPointer> dDirections;
     int client;
-    lista<SocketClienteHeap *>* list_ClientStatus;
+    lista<NodoSDSM *>* list_ClientStatus;
     char* id;
-
-
+    void cargarNodos();
+    int cargarPuerto(char* port);
+    void newNode(char* ip,int puerto,int status);
 
     void d_calloc(int pSize);
     void d_free(dPointer toFree);
@@ -62,9 +72,10 @@ private:
     void checkfree(int status);
     void checkstatus(int mem_disponible,int max_chunck);
     void checkset(int status);
-     dHeap();
+    dHeap();
 
 public:
+<<<<<<< HEAD
 d_pointer_size_type *dMalloc(int size, dChar type);
  static dHeap* getInstance();
  void newNode(char * message);
@@ -72,6 +83,12 @@ d_pointer_size_type *dMalloc(int size, dChar type);
 
 
     ~dHeap();
+=======
+     static dHeap* getInstance();
+     void newNode(char * message);
+     void reciveMns(char * message);
+     ~dHeap();
+>>>>>>> 0bfc03cecd3bb36e7f3481b76e5c99b8a8422cfb
 
 
 };

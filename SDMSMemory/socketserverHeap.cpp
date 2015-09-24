@@ -3,7 +3,6 @@
 
 SocketServerHeap::SocketServerHeap(int puerto, dHeap *server){
     Puerto=puerto;
-
     this->server=server;
 
 
@@ -72,12 +71,11 @@ void SocketServerHeap::run(){
         else{
             data.server=server;
             data.puerto=Puerto;
-
-                cout<<"Creado un cliente"<<endl;
-                data.server=dHeap::getInstance();
-                pthread_t hilo;
-                pthread_create(&hilo,0,SocketServerHeap::controladorCliente,(void *)&data);
-                pthread_detach(hilo);
+            cout<<"Creado un cliente"<<endl;
+            data.server=dHeap::getInstance();
+            pthread_t hilo;
+            pthread_create(&hilo,0,SocketServerHeap::controladorCliente,(void *)&data);
+            pthread_detach(hilo);
 
 
 
@@ -96,27 +94,23 @@ int SocketServerHeap::get_puerto(){return this->Puerto;}
  * @return
  */
 void *SocketServerHeap::controladorCliente(void *obj){
+<<<<<<< HEAD
     dataSocketHeap* data = (dataSocketHeap*)obj;
+=======
+    dataSocketHeap*data = (dataSocketHeap*)obj;
+>>>>>>> 0bfc03cecd3bb36e7f3481b76e5c99b8a8422cfb
     while(true){
+        char buffer[1000]={0};
+        int bytes = recv(data->descriptor,buffer,1000,0);
+        if(bytes<=0){
 
-
-            char buffer[1000]={0};
-            int bytes = recv(data->descriptor,buffer,1000,0);
-            if(bytes<=0){
-
-            break;
-            }
-            else{
-                cout<<buffer<<endl;
-                data->server->newNode(buffer);
+        break;
+        }
+        else{
+            cout<<buffer<<endl;
+            data->server->newNode(buffer);
 
         }
-
-
-
-
-
-
     }
     close(data->descriptor);
     pthread_exit(NULL);

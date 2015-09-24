@@ -89,4 +89,5 @@ HEADERS += \
     NodeTree.h \
     server.h \
     socketcliente.h \
-    TreeBinary.h
+    TreeBinary.h \
+    xmlmanager.h

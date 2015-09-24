@@ -19,6 +19,7 @@
 #include "d_pointer_size_type.h"
 #include "linked_list.h"
 #include <garbagecollector.h>
+#include "dHeap.h"
 
 
 using namespace std;
@@ -30,6 +31,7 @@ char hola[7];
      QCoreApplication a(argc, argv);
 
 
+<<<<<<< HEAD
      d_pointer_size_type n;
 dChar x;
 x='dInt';
@@ -46,8 +48,12 @@ CODIGO DE SANTI  Y CRISTIAN!!!!!
 >>>>>>> Stashed changes
 
 SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7008,7001);
+=======
+//SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7008,7001);
+>>>>>>> 0bfc03cecd3bb36e7f3481b76e5c99b8a8422cfb
 
       // nodeMemory->~SDSMemoryNode();
+    dHeap* heap=dHeap::getInstance();
 
 
 
