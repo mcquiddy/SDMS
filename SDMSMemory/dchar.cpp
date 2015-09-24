@@ -4,8 +4,7 @@ dChar::dChar()
 {
 
 
-struct dChar;
-struct dArray;
+
 
 }
 

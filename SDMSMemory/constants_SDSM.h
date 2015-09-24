@@ -6,4 +6,8 @@
 using namespace std;
 
 const string DELIMITADOR=";";
+
+
+
 #endif // CONSTANTS_SDSM_H
+
