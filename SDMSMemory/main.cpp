@@ -29,7 +29,7 @@ char hola[7];
 
 SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7008,7001);
 
-       nodeMemory->~SDSMemoryNode();
+      // nodeMemory->~SDSMemoryNode();
 
 
 

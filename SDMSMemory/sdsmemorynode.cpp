@@ -12,15 +12,18 @@ void SDSMemoryNode::start(int Puerto, int Puerto_status)
 {
     this->puerto = new SocketServer(Puerto,this);
     this->puerto_status = new SocketServer(Puerto_status,this);
-    this->informar("192.168.1.113",7008);
+
     SDSMemoryServer::start();
+     this->informar("192.168.1.122",5000);
+
 
 }
 
 void SDSMemoryNode::actualizar()
 {
-    d_estado Estado=Manejador->status();
+    d_estado Estado=Manejador.status();
     cout<<Estado.totalMemory<<endl;
+
 
     StringBuffer s;
     Writer<StringBuffer> writer(s);
@@ -29,8 +32,8 @@ void SDSMemoryNode::actualizar()
     writer.String("nodo");
     writer.StartArray();
     writer.Int(id);
-    writer.Int(Manejador->get_memoria());
-    writer.Int(Manejador->get_freememory());
+//    writer.Int(Manejador->get_memoria());
+//    writer.Int(Manejador->get_freememory());
     writer.EndArray();
     writer.EndObject();
 
@@ -230,8 +233,9 @@ void SDSMemoryNode::reciveMns(char * message){
    if(doc.IsObject()){
        // Verifica cual orden o accion se tiene que hacer
        if(doc.HasMember("protocolo")){
+           string comando;
            if(doc["protocolo"].IsString()){
-               string comando;
+
                comando=doc["protocolo"].GetString();
            }
            //Si la orden o protocolo es d_calloc, se obtiene el dato pSize, y se llama a que se reserve un espacio
@@ -433,7 +437,8 @@ void SDSMemoryNode::informar(char *IP, int puerto)
 {
     cout<<"informando.."<<endl;
     string ip=getAddresss();
-    SocketCliente *miCliente=new SocketCliente(IP,puerto);
+    SocketCliente *miCliente=new SocketCliente(puerto,IP);
+    miCliente->connectar();
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
@@ -447,11 +452,17 @@ void SDSMemoryNode::informar(char *IP, int puerto)
     writer.Int(puerto_status->get_puerto());
     writer.EndObject();
     cout<<s.GetString()<<endl;
+    try{
+        miCliente->setMensaje(s.GetString());
+    }
+    catch(string ex){
+        cout<<" no se pudo conectar "<<endl;
+    }
 
-    miCliente->connectar(s.GetString());
+
 }
 
-}
+
 
 char *SDSMemoryNode::getAddresss()
 {
@@ -459,6 +470,7 @@ char *SDSMemoryNode::getAddresss()
     struct ifaddrs * ifAddrStruct=NULL;
     struct ifaddrs * ifa=NULL;
     void * tmpAddrPtr=NULL;
+
     getifaddrs(&ifAddrStruct);
     for (ifa = ifAddrStruct; ifa != NULL; ifa = ifa->ifa_next) {
         if (!ifa->ifa_addr) {

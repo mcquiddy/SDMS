@@ -103,8 +103,9 @@ void *SocketServer::controladorCliente(void *obj){
 
             char buffer[1000]={0};
             int bytes = recv(data->descriptor,buffer,1000,0);
-            if(bytes<0)
+            if(bytes<=0)
                 cout<<"ERROR:-No se leyó correctamente\n";
+            break;
             else{
                 data->server->reciveMns(buffer);
         }
