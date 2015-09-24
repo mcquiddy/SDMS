@@ -7,17 +7,21 @@
 
 #ifndef DPOINTER_H_
 #define DPOINTER_H_
+#include <iostream>
+
+using namespace std;
 
 
 class dPointer {
+
 public:
-    string type;
     string data;
     int ref;
     int DirectionPointer;
     int pSize;
     dPointer(char* type);
-    char* pType;
+    const char* pType;
 };
 
 #endif /* DPOINTER_H_ */
+

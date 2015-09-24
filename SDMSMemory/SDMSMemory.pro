@@ -31,7 +31,9 @@ SOURCES += main.cpp \
     dPointer.cpp \
     server.cpp \
     pugiXML/pugixml.cpp \
-    garbagecollector.cpp
+    garbagecollector.cpp \
+    socketclienteHeap.cpp \
+    socketserverHeap.cpp
 
 HEADERS += \
     constants_SDSM.h \
@@ -82,4 +84,6 @@ HEADERS += \
     server.h \
     pugiXML/pugiconfig.hpp \
     pugiXML/pugixml.hpp \
-    garbagecollector.h
+    garbagecollector.h \
+    socketclienteHeap.h \
+    socketserverHeap.h
