@@ -29,11 +29,11 @@ SOURCES += main.cpp \
     client.cpp \
     dHeap.cpp \
     dPointer.cpp \
-    server.cpp \
     pugiXML/pugixml.cpp \
     garbagecollector.cpp \
     socketclienteHeap.cpp \
-    socketserverHeap.cpp
+    socketserverHeap.cpp \
+    socketcliente.cpp
 
 HEADERS += \
     constants_SDSM.h \
@@ -81,9 +81,12 @@ HEADERS += \
     client.h \
     dHeap.h \
     dPointer.h \
-    server.h \
     pugiXML/pugiconfig.hpp \
     pugiXML/pugixml.hpp \
     garbagecollector.h \
     socketclienteHeap.h \
-    socketserverHeap.h
+    socketserverHeap.h \
+    NodeTree.h \
+    server.h \
+    socketcliente.h \
+    TreeBinary.h

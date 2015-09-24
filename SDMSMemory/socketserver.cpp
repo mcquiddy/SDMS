@@ -99,22 +99,15 @@ void SocketServer::closeSocket(){flag_listen=false;}
 void *SocketServer::controladorCliente(void *obj){
     dataSocket*data = (dataSocket*)obj;
     while(true){
-
-
-            char buffer[1000]={0};
-            int bytes = recv(data->descriptor,buffer,1000,0);
-            if(bytes<=0)
-                cout<<"ERROR:-No se leyó correctamente\n";
+        char buffer[1000]={0};
+        int bytes = recv(data->descriptor,buffer,1000,0);
+        if(bytes<=0){
+            cout<<"ERROR:-No se leyó correctamente\n";
             break;
-            else{
-                data->server->reciveMns(buffer);
         }
-
-
-
-
-
-
+        else{
+            data->server->reciveMns(buffer);
+        }
     }
     close(data->descriptor);
     pthread_exit(NULL);

@@ -438,7 +438,6 @@ void SDSMemoryNode::informar(char *IP, int puerto)
     cout<<"informando.."<<endl;
     string ip=getAddresss();
     SocketCliente *miCliente=new SocketCliente(puerto,IP);
-    miCliente->connectar();
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
@@ -452,14 +451,17 @@ void SDSMemoryNode::informar(char *IP, int puerto)
     writer.Int(puerto_status->get_puerto());
     writer.EndObject();
     cout<<s.GetString()<<endl;
-    try{
-        miCliente->setMensaje(s.GetString());
+    if(miCliente->connectar()){
+        try{
+            miCliente->setMensaje(s.GetString());
+        }
+        catch (string ex){
+            cout<<"ERROR: -no se envió mensaje-\n";
+        }
     }
-    catch(string ex){
-        cout<<" no se pudo conectar "<<endl;
+    else{
+        cout<<"ERROR: -no se pudo conectar-\n";
     }
-
-
 }
 
 
