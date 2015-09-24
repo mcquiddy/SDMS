@@ -24,6 +24,8 @@ public:
     void operator=(const dObject& obj);//
     bool operator==(const d_pointer_size_type& obj);
 
+    void setSize(int value);
+
     //both is olverload  for realize pointers arithmetic
     int operator++(int);
     int operator--(int);

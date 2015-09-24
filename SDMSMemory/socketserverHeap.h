@@ -14,7 +14,8 @@
 class dHeap;
 using namespace std;
 
-struct dataSocket{
+
+struct dataSocketHeap{
     dHeap* server;
     int descriptor;
     int puerto;

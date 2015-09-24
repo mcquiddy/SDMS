@@ -84,6 +84,11 @@ void d_pointer_size_type::setSize(dInt value)
 {
     *size = value;
 }
+
+void d_pointer_size_type::setSize(int value)
+{
+    *size->x = value;
+}
 dChar d_pointer_size_type::getDataType()
 {
     return *dataType;

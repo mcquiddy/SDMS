@@ -115,13 +115,19 @@ void dHeap::d_get(dPointer toGet){
  * \param size
  * \param type
  */
-void dHeap::dMalloc(int size, char* type){
+d_pointer_size_type* dHeap::dMalloc(int size, dChar type){
 
-    this->vPointer = new dPointer(type);
-    this->vPointer->pType = type;
+    d_pointer_size_type* puntero = new d_pointer_size_type();
+    dInt siz;
+    siz=size;
+    puntero->setSize(siz);
+    puntero->setDataType(type);
 
-
+    return puntero;
+    //this->vPointer = new dPointer(type);
+    //this->vPointer->pType = type;
 }
+
 dHeap * dHeap::unicdHeap=NULL;
 
 dHeap *dHeap::getInstance()

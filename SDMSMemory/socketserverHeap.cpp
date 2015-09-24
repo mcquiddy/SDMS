@@ -62,7 +62,7 @@ void SocketServerHeap::run(){
         throw string("ERROR al ligar kernel en el puerto: ");
     }
     while(true) {
-        dataSocket data;
+        dataSocketHeap data;
         socklen_t tam = sizeof(data.info);
         data.descriptor = accept(descriptor,(sockaddr*)&data.info,&tam);
         if(data.descriptor<0){
@@ -96,7 +96,7 @@ int SocketServerHeap::get_puerto(){return this->Puerto;}
  * @return
  */
 void *SocketServerHeap::controladorCliente(void *obj){
-    dataSocket*data = (dataSocket*)obj;
+    dataSocketHeap* data = (dataSocketHeap*)obj;
     while(true){
 
 

@@ -24,6 +24,8 @@
 #include "socketserverHeap.h"
 #include "pthread.h"
 #include "socketclienteHeap.h"
+#include <d_pointer_size_type.h>
+
 using namespace std;
 using namespace rapidjson;
 
@@ -55,7 +57,7 @@ private:
 
     void d_set(dPointer toSend);
     void d_status();
-    void dMalloc(int size, char* type);
+
     void checkcalloc(int status, int direccion);
     void checkfree(int status);
     void checkstatus(int mem_disponible,int max_chunck);
@@ -63,7 +65,7 @@ private:
      dHeap();
 
 public:
-
+d_pointer_size_type *dMalloc(int size, dChar type);
  static dHeap* getInstance();
  void newNode(char * message);
     void reciveMns(char * message);
