@@ -4,15 +4,13 @@
 #include <dint.h>
 #include <dchar.h>
 #include <dlong.h>
-#include </home/geovanny/git/SDMS/SDMSMemory/darray.h>
-#include </home/geovanny/git/SDMS/SDMSMemory/dint.h>
 #include <iostream>
 #include <QtNetwork/QNetworkInterface>
 #include <stdio.h>
 #include <stdlib.h>
 
 
-#include </home/geovanny/git/SDMS/SDMSMemory/d_pointer_size_type.h>
+
 #include <dobject.h>
 
 
@@ -24,31 +22,32 @@
 
 using namespace std;
 char hola[7];
- int  main()
-{
- /*!
-CODIGO DE SANTI  Y CRISTIAN!!!!!
+ int  main(int argc, char *argv[])
+ {
+
+     QCoreApplication a(argc, argv);
 
 SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7008,7001);
+
        nodeMemory->~SDSMemoryNode();
-   */
 
 
 
 
 
 
-     dInt y,z;
 
-    int k=4;
-     y;
-     z=y;
-     dChar a,b,c;
-    char d='h';
-     a='a';
+//     dInt y,z;
 
-     c='c';
-    b=d;
+//    int k=4;
+//     y;
+//     z=y;
+//     dChar a,b,c;
+//    char d='h';
+//     a='a';
+
+//     c='c';
+//    b=d;
      //int & f;
      //int u=5;
       //f=&u;
@@ -59,11 +58,11 @@ SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7008,7001);
     //*f=5;
     //free(f);
    //cout<<sizeof(*y.x)<<"\n";
-     cout<<b;
+//     cout<<b;
 
      //dInt *x;
      //*x->x=5;
-     cout<<y;
+    // cout<<y;
 
 
      // x++;//sobrecarga para dInt
@@ -115,7 +114,7 @@ SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7008,7001);
         }
       */
 
-return 0;
+return a.exec();
  }
 
 

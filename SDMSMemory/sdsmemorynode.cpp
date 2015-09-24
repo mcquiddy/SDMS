@@ -12,7 +12,9 @@ void SDSMemoryNode::start(int Puerto, int Puerto_status)
 {
     this->puerto = new SocketServer(Puerto,this);
     this->puerto_status = new SocketServer(Puerto_status,this);
+    this->informar("192.168.1.113",7008);
     SDSMemoryServer::start();
+
 }
 
 void SDSMemoryNode::actualizar()
@@ -38,6 +40,9 @@ void SDSMemoryNode::actualizar()
     while(temp!=NULL){
         puerto_status->sentMns(s.GetString(),temp->get_data());
         temp=temp->get_next();
+    }
+
+
 }
 
 
