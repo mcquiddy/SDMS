@@ -18,6 +18,7 @@
 #include "d_pointer_size_type.h"
 #include "linked_list.h"
 #include <garbagecollector.h>
+#include "dHeap.h"
 
 
 using namespace std;
@@ -27,9 +28,11 @@ char hola[7];
 
      QCoreApplication a(argc, argv);
 
-SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7008,7001);
+
+//SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7008,7001);
 
       // nodeMemory->~SDSMemoryNode();
+    dHeap* heap=dHeap::getInstance();
 
 
 

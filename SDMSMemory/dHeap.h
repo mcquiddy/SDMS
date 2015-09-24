@@ -24,30 +24,38 @@
 #include "socketserverHeap.h"
 #include "pthread.h"
 #include "socketclienteHeap.h"
+#include "pugiXML/pugixml.hpp"
+
 using namespace std;
 using namespace rapidjson;
 
-
+struct NodoSDSM{
+    SocketClienteHeap* puerto;
+    SocketClienteHeap* status;
+    int id;
+};
 
 
 class dHeap
 {
 private:
+    static dHeap* unicdHeap;
+    static void* run(void* obj);
+    int contadorID;
 
-      static dHeap* unicdHeap;
-      static void* run(void* obj);
-      SocketServerHeap * newSDSM;
+    SocketServerHeap * newSDSM;
+    SocketServerHeap * newStatus;
 
     char pFolder;
     lista<string> pNodes;
     dPointer* vPointer;
-
     lista<dPointer> dDirections;
     int client;
-    lista<SocketClienteHeap *>* list_ClientStatus;
+    lista<NodoSDSM *>* list_ClientStatus;
     char* id;
-
-
+    void cargarNodos();
+    int cargarPuerto(char* port);
+    void newNode(char* ip,int puerto,int status);
 
     void d_calloc(int pSize);
     void d_free(dPointer toFree);
@@ -60,16 +68,13 @@ private:
     void checkfree(int status);
     void checkstatus(int mem_disponible,int max_chunck);
     void checkset(int status);
-     dHeap();
+    dHeap();
 
 public:
-
- static dHeap* getInstance();
- void newNode(char * message);
-    void reciveMns(char * message);
-
-
-    ~dHeap();
+     static dHeap* getInstance();
+     void newNode(char * message);
+     void reciveMns(char * message);
+     ~dHeap();
 
 
 };
