@@ -12,7 +12,40 @@ void SDSMemoryNode::start(int Puerto, int Puerto_status)
 {
     this->puerto = new SocketServer(Puerto,this);
     this->puerto_status = new SocketServer(Puerto_status,this);
+
     SDSMemoryServer::start();
+     this->informar("192.168.1.122",5000);
+
+
+}
+
+void SDSMemoryNode::actualizar()
+{
+    d_estado Estado=Manejador.status();
+    cout<<Estado.totalMemory<<endl;
+
+
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
+
+    writer.StartObject();
+    writer.String("nodo");
+    writer.StartArray();
+    writer.Int(id);
+//    writer.Int(Manejador->get_memoria());
+//    writer.Int(Manejador->get_freememory());
+    writer.EndArray();
+    writer.EndObject();
+
+    cout<<s.GetString()<<endl;
+    list_ClientStatus.print_list();
+    Node<int> *temp=list_ClientStatus.get_head();
+    while(temp!=NULL){
+        puerto_status->sentMns(s.GetString(),temp->get_data());
+        temp=temp->get_next();
+    }
+
+
 }
 
 
@@ -200,8 +233,9 @@ void SDSMemoryNode::reciveMns(char * message){
    if(doc.IsObject()){
        // Verifica cual orden o accion se tiene que hacer
        if(doc.HasMember("protocolo")){
+           string comando;
            if(doc["protocolo"].IsString()){
-               string comando;
+
                comando=doc["protocolo"].GetString();
            }
            //Si la orden o protocolo es d_calloc, se obtiene el dato pSize, y se llama a que se reserve un espacio
@@ -397,4 +431,68 @@ void SDSMemoryNode::d_set(int pStatus)
     cout<<"Enviando... "<<mensaje<<endl;
     puerto->sentMns(mensaje,client);
 
+}
+
+void SDSMemoryNode::informar(char *IP, int puerto)
+{
+    cout<<"informando.."<<endl;
+    string ip=getAddresss();
+    SocketCliente *miCliente=new SocketCliente(puerto,IP);
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
+    writer.StartObject();
+    writer.String("id");
+    writer.Int(this->id);
+    writer.String("ip");
+    writer.String(ip.c_str());
+    writer.String("puerto");
+    writer.Int(this->puerto->get_puerto());
+    writer.String("status");
+    writer.Int(puerto_status->get_puerto());
+    writer.EndObject();
+    cout<<s.GetString()<<endl;
+    if(miCliente->connectar()){
+        try{
+            miCliente->setMensaje(s.GetString());
+        }
+        catch (string ex){
+            cout<<"ERROR: -no se envió mensaje-\n";
+        }
+    }
+    else{
+        cout<<"ERROR: -no se pudo conectar-\n";
+    }
+}
+
+
+
+char *SDSMemoryNode::getAddresss()
+{
+    string ip="Error";
+    struct ifaddrs * ifAddrStruct=NULL;
+    struct ifaddrs * ifa=NULL;
+    void * tmpAddrPtr=NULL;
+
+    getifaddrs(&ifAddrStruct);
+    for (ifa = ifAddrStruct; ifa != NULL; ifa = ifa->ifa_next) {
+        if (!ifa->ifa_addr) {
+            continue;
+        }
+        if (ifa->ifa_addr->sa_family == AF_INET) { // check it is IP4
+            // is a valid IP4 Address
+            tmpAddrPtr=&((struct sockaddr_in *)ifa->ifa_addr)->sin_addr;
+            char addressBuffer[INET_ADDRSTRLEN];
+            inet_ntop(AF_INET, tmpAddrPtr, addressBuffer, INET_ADDRSTRLEN);
+            printf("%s IP Address %s\n", ifa->ifa_name, addressBuffer);
+            ip=addressBuffer;
+            cout<<ip;
+
+        }
+        else if (ifa->ifa_addr->sa_family == AF_INET6) { // check it is IP6
+            // is a valid IP6 Address
+            tmpAddrPtr=&((struct sockaddr_in6 *)ifa->ifa_addr)->sin6_addr;
+        }
+    }
+    if (ifAddrStruct!=NULL) freeifaddrs(ifAddrStruct);
+    return (char*)ip.c_str();
 }

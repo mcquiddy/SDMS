@@ -25,7 +25,8 @@ SOURCES += main.cpp \
     dlong.cpp \
     dobject.cpp \
     sdsmemoryserver.cpp \
-    socketserver.cpp
+    socketserver.cpp \
+    socketcliente.cpp
 
 HEADERS += \
     sdsmemorynode.h \
@@ -69,4 +70,7 @@ HEADERS += \
     dlong.h \
     dobject.h \
     sdsmemoryserver.h \
-    socketserver.h
+    socketserver.h \
+    NodeTree.h \
+    TreeBinary.h \
+    socketcliente.h

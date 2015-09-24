@@ -13,6 +13,11 @@
 #include "rapidjson/document.h"
 #include "rapidjson/prettywriter.h"
 #include "memorymannager.h"
+#include "socketcliente.h"
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <ifaddrs.h>
+#include <stdio.h>
 
 using namespace std;
 using namespace rapidjson;
@@ -25,10 +30,14 @@ class SDSMemoryNode: public SDSMemoryServer
 private:
     MemoryMannager Manejador;
     int client;
-    lista<int*> list_ClientStatus;
+    lista<int> list_ClientStatus;
     void* memoria_reservada;
-    char* id;
+    int id;
     void start(int Puerto,int Puerto_status);
+
+    void actualizar();
+    void informar(char *IP, int puerto);
+    char* getAddresss();
 
 
     void d_calloc(int pSize);
