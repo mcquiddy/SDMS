@@ -203,6 +203,7 @@ void dHeap::d_get(dPointer toGet){
  * \param size
  * \param type
  */
+<<<<<<< HEAD
 d_pointer_size_type* dHeap::dMalloc(int size, char* type){
     d_pointer_size_type pointer;
     pointer.setDataType(type);
@@ -217,8 +218,39 @@ d_pointer_size_type* dHeap::dMalloc(int size, char* type){
     cout<<" salio while "<<endl;
     pointer.setPuntero(dirPointer);
     return &pointer;
+=======
+d_pointer_size_type* dHeap::dMalloc(int size, dChar type){
+
+    d_pointer_size_type* puntero = new d_pointer_size_type();
+    dInt siz;
+    siz=size;
+    puntero->setSize(siz);
+    puntero->setDataType(type);
+
+    return puntero;
+    //this->vPointer = new dPointer(type);
+    //this->vPointer->pType = type;
+}
+<<<<<<< HEAD
+
+dHeap * dHeap::unicdHeap=NULL;
+
+dHeap *dHeap::getInstance()
+{
+
+    if(unicdHeap==NULL){
+
+        unicdHeap=new dHeap();
+
+
+
+    }
+ return unicdHeap;
+>>>>>>> 0c03dd1e6bd141a7cc8d82895ae6cbae82ae9df3
 
 }
+=======
+>>>>>>> 0bfc03cecd3bb36e7f3481b76e5c99b8a8422cfb
 
 void dHeap::newNode(char *message)
 {

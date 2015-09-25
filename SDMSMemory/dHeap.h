@@ -24,7 +24,11 @@
 #include "socketserverHeap.h"
 #include "pthread.h"
 #include "socketclienteHeap.h"
+<<<<<<< HEAD
+#include <d_pointer_size_type.h>
+=======
 #include "pugiXML/pugixml.hpp"
+>>>>>>> 0bfc03cecd3bb36e7f3481b76e5c99b8a8422cfb
 
 
 using namespace std;
@@ -66,8 +70,11 @@ private:
     void d_set(dPointer toSend);
     void d_status();
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 0c03dd1e6bd141a7cc8d82895ae6cbae82ae9df3
     void checkcalloc(int status, int direccion);
     void checkfree(int status);
     void checkstatus(int mem_disponible,int max_chunck);
@@ -75,12 +82,25 @@ private:
     dHeap();
 
 public:
+<<<<<<< HEAD
      void cargarNodos();
      d_pointer_size_type *dMalloc(int size, char* type);
+=======
+<<<<<<< HEAD
+d_pointer_size_type *dMalloc(int size, dChar type);
+ static dHeap* getInstance();
+ void newNode(char * message);
+    void reciveMns(char * message);
+
+
+    ~dHeap();
+=======
+>>>>>>> 0c03dd1e6bd141a7cc8d82895ae6cbae82ae9df3
      static dHeap* getInstance();
      void newNode(char * message);
      void reciveMns(char * message);
      ~dHeap();
+>>>>>>> 0bfc03cecd3bb36e7f3481b76e5c99b8a8422cfb
 
 
 };
