@@ -14,7 +14,7 @@ void SDSMemoryNode::start(int Puerto, int Puerto_status)
     this->puerto_status = new SocketServer(Puerto_status,this);
 
     SDSMemoryServer::start();
-     this->informar("192.168.1.122",5000);
+   //  this->informar("192.168.1.122",5000);
 
 
 }
@@ -67,6 +67,8 @@ void SDSMemoryNode::d_calloc(int pSize)
     Writer<StringBuffer> writer(s);
 
     writer.StartObject();
+    writer.String("protocolo");
+    writer.String("d_calloc");
     writer.String("status");
     writer.Bool(Dpointer.status);
     writer.String("direccion");
@@ -92,6 +94,8 @@ void SDSMemoryNode::d_free(d_pointer_size free)
     Writer<StringBuffer> writer(s);
 
     writer.StartObject();
+    writer.String("protocolo");
+    writer.String("d_free");
     writer.String("status");
     writer.Int(status);
 
@@ -115,6 +119,8 @@ void SDSMemoryNode::d_status()
     Writer<StringBuffer> writer(s);
 
     writer.StartObject();
+    writer.String("protocolo");
+    writer.String("d_status");
     writer.String("memoria_disponible");
     writer.Int(estado.totalMemory);
     writer.String("max_chunk");
@@ -369,6 +375,8 @@ void SDSMemoryNode::reciveMns(char * message){
                           if(comando=="d_get"){
                               writer.String("status");
                               writer.Int(statusBystream.status);
+                              writer.String("protocolo");
+                              writer.String("d_get");
                               writer.EndObject();
                               const char* mensaje=s.GetString();
                               cout<<"Enviando... "<<mensaje<<endl;
@@ -420,6 +428,8 @@ void SDSMemoryNode::d_set(int pStatus)
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
+    writer.String("protocolo");
+    writer.String("d_set");
     writer.String("status");
 
 

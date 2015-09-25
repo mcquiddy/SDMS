@@ -50,7 +50,7 @@ void* SocketClienteHeap::controlador(void *obj)
             break;
         }
         else{
-
+         cout<<" nuevo mensaje de nodo en cliente"<<endl;
          client->heap->reciveMns(buffer);
         }
     }

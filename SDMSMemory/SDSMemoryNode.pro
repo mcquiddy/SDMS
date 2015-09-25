@@ -26,7 +26,16 @@ SOURCES += main.cpp \
     dobject.cpp \
     sdsmemoryserver.cpp \
     socketserver.cpp \
-    socketcliente.cpp
+    socketcliente.cpp \
+    pugiXML/pugixml.cpp \
+    client.cpp \
+    dHeap.cpp \
+    dPointer.cpp \
+    garbagecollector.cpp \
+    ostream.cpp \
+    pointer.cpp \
+    socketclienteHeap.cpp \
+    socketserverHeap.cpp
 
 HEADERS += \
     sdsmemorynode.h \
@@ -73,4 +82,13 @@ HEADERS += \
     socketserver.h \
     NodeTree.h \
     TreeBinary.h \
-    socketcliente.h
+    socketcliente.h \
+    pugiXML/pugiconfig.hpp \
+    pugiXML/pugixml.hpp \
+    client.h \
+    dHeap.h \
+    dPointer.h \
+    garbagecollector.h \
+    ostream.h \
+    socketclienteHeap.h \
+    socketserverHeap.h

@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <dHeap.h>
 #include <dobject.h>
-
+#include "sdsmemorynode.h"
 
 
 using namespace std;
@@ -21,14 +21,19 @@ using namespace std;
      QCoreApplication a(argc, argv);
 
 
+dHeap* heap=dHeap::getInstance();
+heap->cargarNodos();
+dInt b;
+b=5;
 
+SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7008,7001);
 /*!
 CODIGO DE SANTI  Y CRISTIAN!!!!!
 >>>>>>> Stashed changes
 
-SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7008,7001);
+
 =======
-//SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7008,7001);
+//
 >>>>>>> 0bfc03cecd3bb36e7f3481b76e5c99b8a8422cfb
 
       // nodeMemory->~SDSMemoryNode();

@@ -72,7 +72,7 @@ private:
 
 
 
-    void checkcalloc(int status, int direccion);
+    void checkcalloc(bool status, int direccion);
     void checkfree(int status);
     void checkstatus(int mem_disponible,int max_chunck);
     void checkset(int status);

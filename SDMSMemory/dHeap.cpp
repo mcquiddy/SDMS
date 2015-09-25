@@ -57,7 +57,7 @@ void dHeap::cargarNodos()
 {
     cout<<"Cargando nodos...";
     pugi::xml_document doc;
-    if (!doc.load_file("/home/santii/Dropbox/pugixmlPruebas/config.xml")){
+    if (!doc.load_file("/home/mcquiddy/git/SDMS/config.xml")){
         cout<<"Error al cargar xml\n";
     }
     else{
@@ -81,7 +81,7 @@ void dHeap::cargarNodos()
 int dHeap::cargarPuerto(char *port)
 {
     pugi::xml_document doc;
-    if (!doc.load_file("/home/santii/Proyecto1/SDMS/config.xml")){
+    if (!doc.load_file("/home/mcquiddy/git/SDMS/config.xml")){
         cout<<"Error al cargar xml\n";
         return -1;
     }
@@ -213,10 +213,12 @@ d_pointer_size_type* dHeap::dMalloc(int size, char* type){
     d_calloc(size);
     cout<<" entro while "<<endl;
     while(flag_dirpointer){
+        cout<<" reservando memoria "<<endl;
 
     }
     cout<<" salio while "<<endl;
     pointer.setPuntero(dirPointer);
+
     return &pointer;
 
 }
@@ -290,9 +292,9 @@ void dHeap::d_status()
 
 }
 
-void dHeap::checkcalloc(int status, int direccion)
+void dHeap::checkcalloc(bool status, int direccion)
 {
-    if(status==1){
+    if(status==true){
         cout<<" reservacion correcta "<<endl;
         dirPointer=direccion;
         flag_dirpointer=false;
@@ -319,7 +321,7 @@ void dHeap::checkcalloc(int status, int direccion)
 void dHeap::reciveMns(char * message)
 {
 
-    cout<<message<<endl;
+    cout<<" recibe heap "<<message<<endl;
     Document doc;
     doc.ParseInsitu(message);
     if(doc.IsObject()){
@@ -332,10 +334,11 @@ void dHeap::reciveMns(char * message)
     //Si la orden o protocolo es d_calloc, se obtiene el dato pSize, y se llama a que se reserve un espacio
     //de memoria
     if(comando=="d_calloc"){
-        int status,direccion;
+        bool status;
+         int direccion;
         if(doc.HasMember("status")){
-            if(doc["status"].IsInt()){
-                status= doc["status"].GetInt();
+            if(doc["status"].IsBool()){
+                status= doc["status"].GetBool();
             }
         }
         if(doc.HasMember("direccion")){

@@ -2,7 +2,10 @@
 
 dInt::dInt()
 {
-    d_pointer_size_type *memoria=heap->dMalloc(sizeof(int),"dInt");
+   d_pointer_size_type *memoria=heap->dMalloc(sizeof(int),"dInt");
+
+
+    cout<<" dInt "<<endl;
 
 }
  void operator<<(ostream& os,const dInt& dt){
@@ -17,7 +20,7 @@ dInt& dInt::operator = (const dInt &p){
 
 }
 dInt& dInt::operator = (const int& p){
-   *this->x = p;
+   cout<<" hola "<<endl;
 
 
    return *this;

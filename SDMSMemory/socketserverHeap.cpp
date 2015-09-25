@@ -104,7 +104,7 @@ void *SocketServerHeap::controladorCliente(void *obj){
         break;
         }
         else{
-            cout<<buffer<<endl;
+            cout<<" nuevo mensaje de nodo del heap"<<endl;
             data->server->newNode(buffer);
 
         }

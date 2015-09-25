@@ -15,6 +15,7 @@ class dInt: public dObject
 
 {
 public:
+
     dInt();
     dInt& operator = (const int &p);
     dInt& operator = ( const dInt& p);

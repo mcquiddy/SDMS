@@ -2,8 +2,6 @@
 #define D_POINTER_SIZE_TYPE_H
 #include <dobject.h>
 #include <iostream>
-#include <dint.h>
-#include <dchar.h>
 #include <stdio.h>
 #include <stdlib.h>
 
