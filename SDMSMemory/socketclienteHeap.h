@@ -1,6 +1,6 @@
-#ifndef SOCKETCLIENTEHEAP_H
+﻿#ifndef SOCKETCLIENTEHEAP_H
 #define SOCKETCLIENTEHEAP_H
-#include <QObject>
+
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netdb.h>
@@ -15,31 +15,25 @@
 
 class dHeap;
 using namespace std;
-class SocketClienteHeap:public QObject
+class SocketClienteHeap
 {
-Q_OBJECT
 
 public:
     SocketClienteHeap(int pPuerto, char* pIp);
-void setComando(string mensaje);
-        bool setMensaje(const char *msn);
+    void setComando(string mensaje);
+    bool setMensaje(const char *msn);
+    bool connectar();
+    int getPuerto();
+    int getDescriptor();
 
+private:
+    dHeap* heap;
+    static void * controlador(void *obj);
+    int puerto;
+    char* ip;
+    int descriptor;
+    sockaddr_in info;
 
-public slots:
-  bool connectar();
-
-
-
-    private:
-
-dHeap* heap;
-static void * controlador(void *obj);
-
-        int puerto;
-       char* ip;
-        int descriptor;
-        sockaddr_in info;
-       // static void * controlador(void *obj);
 
 
 };

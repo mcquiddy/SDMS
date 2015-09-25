@@ -36,6 +36,7 @@ private:
 
 
 public:
+    int get_descriptor();
     SocketServerHeap(int puerto,dHeap* Server);
     void sentMns(const char* mns,int id);
     void run();

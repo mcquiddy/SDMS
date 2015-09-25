@@ -26,6 +26,7 @@
 #include "socketclienteHeap.h"
 #include "pugiXML/pugixml.hpp"
 
+
 using namespace std;
 using namespace rapidjson;
 
@@ -35,6 +36,7 @@ struct NodoSDSM{
     int id;
 };
 
+class d_pointer_size_type;
 
 class dHeap
 {
@@ -45,25 +47,27 @@ private:
 
     SocketServerHeap * newSDSM;
     SocketServerHeap * newStatus;
-
+    bool flag_dirpointer;
+    int dirPointer;
     char pFolder;
     lista<string> pNodes;
     dPointer* vPointer;
     lista<dPointer> dDirections;
     int client;
-    lista<NodoSDSM *>* list_ClientStatus;
+    lista<NodoSDSM *>* list_nodos;
     char* id;
-    void cargarNodos();
+
     int cargarPuerto(char* port);
-    void newNode(char* ip,int puerto,int status);
+    void Node(char* ip,int puerto,int status);
 
     void d_calloc(int pSize);
     void d_free(dPointer toFree);
     void d_get(dPointer toGet);
-
     void d_set(dPointer toSend);
     void d_status();
-    void dMalloc(int size, char* type);
+
+
+
     void checkcalloc(int status, int direccion);
     void checkfree(int status);
     void checkstatus(int mem_disponible,int max_chunck);
@@ -71,6 +75,8 @@ private:
     dHeap();
 
 public:
+     void cargarNodos();
+     d_pointer_size_type *dMalloc(int size, char* type);
      static dHeap* getInstance();
      void newNode(char * message);
      void reciveMns(char * message);

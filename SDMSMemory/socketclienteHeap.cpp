@@ -6,16 +6,14 @@
 
 SocketClienteHeap::SocketClienteHeap(int pPuerto,char* pIp)
 {
+    puerto=pPuerto;
+    ip=pIp;
+    heap= dHeap::getInstance();
 
-puerto=pPuerto;
-ip=pIp;
-heap= dHeap::getInstance();
-//connectgui=new ConnectGUI();
 }
 
 void SocketClienteHeap::setComando(string mensaje)
 {
-//cout<<" shoot mensaje "<<mensaje<<endl;
     const char * mns=&mensaje[0u];
     this->setMensaje(mns);
 }
@@ -44,30 +42,31 @@ bool SocketClienteHeap::connectar()
 
 void* SocketClienteHeap::controlador(void *obj)
 {
-SocketClienteHeap* client=(SocketClienteHeap*)obj;
+    SocketClienteHeap* client=(SocketClienteHeap*)obj;
     while (true) {
         char buffer[1000]={0};
         int bytes = recv(client->descriptor,buffer,1000,0);
         if(bytes<=0){
-        break;
+            break;
         }
         else{
 
-           client->heap->reciveMns(buffer);
+         client->heap->reciveMns(buffer);
         }
-
     }
     close(client->descriptor);
     pthread_exit(NULL);
 
 }
 
+int SocketClienteHeap::getPuerto(){return this->puerto;}
+int SocketClienteHeap::getDescriptor(){return this->descriptor;}
+
 
 
 bool SocketClienteHeap::setMensaje(const char *msn)
 {
-
-try{
+    try{
         send(descriptor,msn,strlen(msn),0);
         return true;
     }

@@ -19,6 +19,7 @@
 #include "linked_list.h"
 #include <garbagecollector.h>
 #include "dHeap.h"
+#include "socketclienteHeap.h"
 
 
 using namespace std;
@@ -33,6 +34,11 @@ char hola[7];
 
       // nodeMemory->~SDSMemoryNode();
     dHeap* heap=dHeap::getInstance();
+    heap->cargarNodos();
+    //SocketClienteHeap * prueba=new SocketClienteHeap(7008,"192.168.1.122");
+    //prueba->connectar();
+
+    dInt num;
 
 
 

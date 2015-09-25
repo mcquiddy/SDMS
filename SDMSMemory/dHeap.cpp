@@ -8,6 +8,7 @@
 si esto no funciona, pasar los metodos al servidor, enviar solo los argumentos a cada tipo de metodo y enviarlos desde ahi
 */
 #include "dHeap.h"
+#include "d_pointer_size_type.h"
 
 
 
@@ -20,13 +21,14 @@ dHeap::dHeap(){
     int SDSMport=cargarPuerto("SDSMport");
     int SDSMstatus=cargarPuerto("visual");
     cout<<"Creando puertos "<<SDSMport<<" "<<SDSMstatus<<endl;
+    list_nodos=new lista<NodoSDSM*>();
     if(SDSMport!=-1 && SDSMstatus!=-1){
         this->newSDSM = new  SocketServerHeap(SDSMport,this);
         this->newStatus=new  SocketServerHeap(SDSMstatus,this);
         pthread_t hilo_NewNodo,hilo_visual;
         pthread_create(&hilo_NewNodo,0,dHeap::run,(void*)this->newSDSM);
         pthread_create(&hilo_visual,0,dHeap::run,(void*)this->newStatus);
-        cargarNodos();
+
     }
     else
         cout<<"ERROR: -algun puerto no pudo ser cargado-\n";
@@ -60,14 +62,19 @@ void dHeap::cargarNodos()
     }
     else{
         pugi::xml_node root=doc.first_child();
+         cout<<"creando nodos de: "<<root.name()<<endl;
         pugi::xml_node temp=root.child("memoryNodes").first_child();
-        cout<<"creando nodos de: "<<temp.name()<<endl;
+
         while(temp!=NULL){
             cout<<temp.name()<<", ip: "<<temp.attribute("ip").value()<<", puerto: "<<temp.attribute("puerto").value()<<", status: "<<temp.attribute("status").value()<<endl;
             //newNode((char*)temp.attribute("ip").value(),atoi(temp.attribute("puerto").value()),atoi(temp.attribute("status").value()));
             temp=temp.next_sibling();
+
+
         }
-        cout<<"Carga completa";
+         Node("192.168.1.122",7008,7001);
+         cout<<"Carga completa"<<endl;
+
     }
 }
 
@@ -84,19 +91,27 @@ int dHeap::cargarPuerto(char *port)
 
 }
 
-void dHeap::newNode(char *ip, int puerto, int status)
+void dHeap::Node(char *ip, int puerto, int status)
 {
 
     SocketClienteHeap *newPuerto=new SocketClienteHeap(puerto,ip);
-    SocketClienteHeap *newStatus=new SocketClienteHeap(status,ip);
-    if((newPuerto->connectar())&&(newStatus->connectar())){
+//    SocketClienteHeap *newStatus=new SocketClienteHeap(status,ip);
+    //&&(newStatus->connectar())
+    if((newPuerto->connectar())){
         cout<<" nuevo nodo conectado "<<endl;
-        NodoSDSM *newNodo;
+
+        NodoSDSM *newNodo=new NodoSDSM();
+
         newNodo->id=contadorID;
+
         newNodo->puerto=newPuerto;
-        newNodo->status=newStatus;
+
+//        newNodo->status=newStatus;
         contadorID++;
-        list_ClientStatus->insert_head(newNodo);
+
+        list_nodos->insert_head(newNodo);
+
+
     }
     else{
            cout<<" nuevo nodo fallado "<<endl;
@@ -113,6 +128,7 @@ void dHeap::d_set(dPointer toSend){
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
+    writer.String("protocolo");
     writer.String("d_set");
     writer.String("type");
     writer.String(toSend.pType);
@@ -133,13 +149,18 @@ void dHeap::d_calloc(int pSize){
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
+    writer.String("protocolo");
     writer.String("d_calloc");
     writer.String("pSize");
     writer.Int(pSize);
     writer.EndObject();
+    cout<<s.GetString()<<endl;
+    //const char* mensaje = s.GetString();
+    cout<<list_nodos->get_head()->get_data()->puerto->getDescriptor();
+    list_nodos->get_head()->get_data()->puerto->setMensaje(s.GetString());
+    cout<<"puerto->sentMns(mensaje,8);"<<endl;
+    flag_dirpointer=true;
 
-    const char* mensaje = s.GetString();
-   // puerto->sentMns(mensaje,8);
 }
 /*!
  * \brief dHeap::dFree
@@ -149,6 +170,7 @@ void dHeap::d_free(dPointer toFree){
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
+    writer.String("protocolo");
     writer.String("d_free");
     writer.String("dir");
     writer.Int(toFree.DirectionPointer);
@@ -172,7 +194,7 @@ void dHeap::d_get(dPointer toGet){
     writer.String("pSize");
     writer.Int(toGet.pSize);
     writer.EndObject();
-    const char* mensaje = s.GetString();
+
     //puerto->sentMns(mensaje,8);
 
 }
@@ -181,11 +203,20 @@ void dHeap::d_get(dPointer toGet){
  * \param size
  * \param type
  */
-void dHeap::dMalloc(int size, char* type){
+d_pointer_size_type* dHeap::dMalloc(int size, char* type){
+    d_pointer_size_type pointer;
+    pointer.setDataType(type);
+    pointer.setSize(size);
+    pointer.setID(contadorID);
+    contadorID++;
+    d_calloc(size);
+    cout<<" entro while "<<endl;
+    while(flag_dirpointer){
 
-    this->vPointer = new dPointer(type);
-    this->vPointer->pType = type;
-
+    }
+    cout<<" salio while "<<endl;
+    pointer.setPuntero(dirPointer);
+    return &pointer;
 
 }
 
@@ -226,14 +257,12 @@ void dHeap::newNode(char *message)
            newNodo->puerto=newPuerto;
            newNodo->status=newStatus;
            contadorID++;
-           list_ClientStatus->insert_head(newNodo);
+           list_nodos->insert_head(newNodo);
        }
        else{
               cout<<" nuevo nodo fallado "<<endl;
        }
    }
-
-
 }
 
 
@@ -261,6 +290,21 @@ void dHeap::d_status()
 
 }
 
+void dHeap::checkcalloc(int status, int direccion)
+{
+    if(status==1){
+        cout<<" reservacion correcta "<<endl;
+        dirPointer=direccion;
+        flag_dirpointer=false;
+    }
+    else{
+        cout<<" reservacion incorrecta "<<endl;
+        dirPointer=-1;
+        flag_dirpointer=false;
+    }
+
+}
+
 
 
 
@@ -274,6 +318,7 @@ void dHeap::d_status()
  */
 void dHeap::reciveMns(char * message)
 {
+
     cout<<message<<endl;
     Document doc;
     doc.ParseInsitu(message);
@@ -298,7 +343,7 @@ void dHeap::reciveMns(char * message)
                 direccion = doc["direccion"].GetInt();
             }
         }
-        //checkcalloc(status,direccion);
+        checkcalloc(status,direccion);
     }
      //Si la orden o protocolo es d_status se llama a que retorne es estado de memoria
     else if(comando=="d_status"){

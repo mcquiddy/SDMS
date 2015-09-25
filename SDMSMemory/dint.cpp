@@ -2,9 +2,7 @@
 
 dInt::dInt()
 {
-
-
-struct dInt;
+    d_pointer_size_type *memoria=heap->dMalloc(sizeof(int),"dInt");
 
 }
  void operator<<(ostream& os,const dInt& dt){

@@ -111,3 +111,8 @@ void *SocketServerHeap::controladorCliente(void *obj){
     close(data->descriptor);
     pthread_exit(NULL);
 }
+
+int SocketServerHeap::get_descriptor()
+{
+    return this->descriptor;
+}
