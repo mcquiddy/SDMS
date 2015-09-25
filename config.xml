@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <memoryNodes>
+    <nodo1 ip="192.168.0.1" puerto="7000" status="7050" id="123457" />
+    <nodo2 ip="192.168.1.22" puerto="7009" status="7010" id="1014123" />
+  </memoryNodes>
+  <Puertos visual="7080" SDSMport="7090" />
+</root>
