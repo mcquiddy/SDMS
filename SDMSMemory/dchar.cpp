@@ -3,9 +3,6 @@
 dChar::dChar()
 {
 
-
-
-
 }
 
 void operator<<(ostream& os,const dChar& dc){

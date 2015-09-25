@@ -1,4 +1,4 @@
-    #ifndef D_POINTER_SIZE_TYPE_H
+#ifndef D_POINTER_SIZE_TYPE_H
 #define D_POINTER_SIZE_TYPE_H
 #include <dobject.h>
 #include <iostream>
@@ -36,7 +36,6 @@ public:
 
     //set and get size of the pointer
     int  getSize() const;
-    void setSize(int value);
 
     //set and get datatype
     char *getDataType() ;

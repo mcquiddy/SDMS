@@ -5,9 +5,10 @@
 #include <cstdio>
 #include <cstdlib>
 #include <dHeap.h>
-using namespace std;
-class dObject
 
+using namespace std;
+
+class dObject
 {
 protected:
     dHeap* heap=dHeap::getInstance();

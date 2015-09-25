@@ -94,11 +94,8 @@ int SocketServerHeap::get_puerto(){return this->Puerto;}
  * @return
  */
 void *SocketServerHeap::controladorCliente(void *obj){
-<<<<<<< HEAD
+
     dataSocketHeap* data = (dataSocketHeap*)obj;
-=======
-    dataSocketHeap*data = (dataSocketHeap*)obj;
->>>>>>> 0bfc03cecd3bb36e7f3481b76e5c99b8a8422cfb
     while(true){
         char buffer[1000]={0};
         int bytes = recv(data->descriptor,buffer,1000,0);

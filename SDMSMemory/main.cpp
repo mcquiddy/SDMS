@@ -9,22 +9,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <dHeap.h>
-
-
-
 #include <dobject.h>
 
 
-#include "sdsmemorynode.h"
-#include "d_pointer_size_type.h"
-#include "linked_list.h"
-#include <garbagecollector.h>
-#include "dHeap.h"
-#include "socketclienteHeap.h"
-
 
 using namespace std;
-char hola[7];
 
  int  main(int argc, char *argv[])
  {
@@ -32,19 +21,8 @@ char hola[7];
      QCoreApplication a(argc, argv);
 
 
-<<<<<<< HEAD
-     d_pointer_size_type n;
-dChar x;
-x='dInt';
-     n.setSize(3);
-     n.setDataType(x);
-    dHeap* test = dHeap::getInstance();
 
-    test->dMalloc(5,x);
-
-
-
- /*!
+/*!
 CODIGO DE SANTI  Y CRISTIAN!!!!!
 >>>>>>> Stashed changes
 

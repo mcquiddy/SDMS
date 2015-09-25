@@ -33,9 +33,6 @@ void d_pointer_size_type::print(){
     */
 }
 
-void d_pointer_size_type::operator=(const d_pointer_size_type& obj){
-     this->setID(obj.getID());
-}
 
 void d_pointer_size_type::operator=(const dObject& obj){
 
@@ -87,16 +84,9 @@ void d_pointer_size_type::setSize(int value)
 {
    // *size = value;
 }
-<<<<<<< HEAD
-char* d_pointer_size_type::getDataType()
-=======
 
-void d_pointer_size_type::setSize(int value)
-{
-    *size->x = value;
-}
-dChar d_pointer_size_type::getDataType()
->>>>>>> 0c03dd1e6bd141a7cc8d82895ae6cbae82ae9df3
+char* d_pointer_size_type::getDataType()
+
 {
     return dataType;
 }

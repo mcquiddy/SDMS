@@ -6,14 +6,11 @@ class dChar: public dObject
 {
 public:
     dChar();
-
-
-
-bool& operator==(const char& obj);
-bool& operator==(const dChar& obj);
-void operator = (const char c);
-void operator = (const dChar c);
-friend void operator<<(ostream& os, const dChar& dc);
+    bool& operator==(const char& obj);
+    bool& operator==(const dChar& obj);
+    void operator = (const char c);
+    void operator = (const dChar c);
+    friend void operator<<(ostream& os, const dChar& dc);
 
 private:
 
