@@ -25,6 +25,7 @@
 #include "pthread.h"
 #include "socketclienteHeap.h"
 #include "pugiXML/pugixml.hpp"
+#include "Node.h"
 
 
 
@@ -37,6 +38,19 @@ struct NodoSDSM{
     int id;
 };
 
+struct Pointer{
+
+    int id;
+    float datafloat;
+    int dataint;
+    char datachar;
+    bool databool;
+    int* dataArrayint[];
+    char* dataArraychar[];
+    long datalong;
+    double datadouble;
+
+};
 class d_pointer_size_type;
 
 class dHeap
@@ -49,23 +63,19 @@ private:
     SocketServerHeap * newSDSM;
     SocketServerHeap * newStatus;
     bool flag_dirpointer;
+    bool flag_dget;
     int dirPointer;
     char pFolder;
-    lista<string> pNodes;
-    dPointer* vPointer;
-    lista<dPointer> dDirections;
+    Pointer* getPointer;
+    lista< d_pointer_size_type *> *list_dpointer;
     int client;
     lista<NodoSDSM *>* list_nodos;
     char* id;
 
     int cargarPuerto(char* port);
-    void Node(char* ip,int puerto,int status);
+    void newNodeXML(char* ip,int puerto,int status);
 
     void d_calloc(int pSize);
-    void d_free(dPointer toFree);
-    void d_get(dPointer toGet);
-    void d_set(dPointer toSend);
-    void d_status();
 
 
 
@@ -79,7 +89,12 @@ private:
     dHeap();
 
 public:
-
+    void d_free(d_pointer_size_type * toFree);
+    Pointer *d_get(Pointer pointer);
+    void d_set(Pointer pointer);
+    void d_status();
+    int newDpointerSize(int size, char *type);
+d_pointer_size_type * searchDpointer(int pID);
      void cargarNodos();
      d_pointer_size_type *dMalloc(int size, char* type);
      static dHeap* getInstance();

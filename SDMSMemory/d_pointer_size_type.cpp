@@ -7,23 +7,23 @@ d_pointer_size_type::d_pointer_size_type(){
 
 }
 int d_pointer_size_type::getID() const{
-    return *this->ID;
+    return this->ID;
 }
 
 void d_pointer_size_type::setID(int ID)
 {
-    *this->ID=ID;
+    this->ID=ID;
 }
 
 
 int d_pointer_size_type::getReferences() const{
-    return *this->references;
+    return *(this->references);
 }
 
 void d_pointer_size_type::setReferences(int pReferences)
 {
 
-    *this->references = pReferences;
+    *(this->references) = pReferences;
 
 }
 void d_pointer_size_type::print(){
@@ -66,34 +66,34 @@ int d_pointer_size_type::operator--(int ){
 
 }
 
-int* d_pointer_size_type::getPuntero() const{
-    return dirPuntero;
+int d_pointer_size_type::getPuntero() const{
+    return *(this->dirPuntero);
 }
 
 
 void d_pointer_size_type::setPuntero(int value)
 {
-    //*puntero = value;
+    *(this->dirPuntero )= value;
 }
 int d_pointer_size_type::getSize() const
 {
-    return *size;
+    return *(this->size);
 }
 
 void d_pointer_size_type::setSize(int value)
 {
-   // *size = value;
+    *(this->size )= value;
 }
 
-char* d_pointer_size_type::getDataType()
+char d_pointer_size_type::getDataType()
 
 {
-    return dataType;
+    return *(this->dataType);
 }
 
-void d_pointer_size_type::setDataType(char* value)
+void d_pointer_size_type::setDataType(char value)
 {
-    //*dataType = value;
+    *(this->dataType) = value;
 }
 
 

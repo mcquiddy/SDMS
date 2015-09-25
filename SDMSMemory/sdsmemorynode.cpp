@@ -317,6 +317,8 @@ void SDSMemoryNode::reciveMns(char * message){
                                 if(comando=="d_get"){
                                     statusBystream=Manejador.obtenerDatoChar(pointerSize);
                                     writer.String(&(statusBystream.datachar));
+                                    writer.String("tipo");
+                                    writer.String("char");
 
 
                                  }
@@ -338,6 +340,8 @@ void SDSMemoryNode::reciveMns(char * message){
 
                                    statusBystream=Manejador.obtenerDatoInt(pointerSize);
                                    writer.Int(statusBystream.dataint);
+                                   writer.String("tipo");
+                                   writer.String("int");
 
                                 }
 

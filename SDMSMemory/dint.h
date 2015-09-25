@@ -25,7 +25,8 @@ public:
     void operator--(int );
     friend void operator<<(ostream& os, const dInt& dt);
     int* x = (int*)calloc(1,sizeof(int));
-
+private:
+int id;
 
 
 

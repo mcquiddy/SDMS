@@ -704,9 +704,7 @@ d_pointer_size_type.o: d_pointer_size_type.cpp d_pointer_size_type.h \
 		socketserverHeap.h \
 		socketclienteHeap.h \
 		pugiXML/pugixml.hpp \
-		pugiXML/pugiconfig.hpp \
-		dint.h \
-		dchar.h
+		pugiXML/pugiconfig.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o d_pointer_size_type.o d_pointer_size_type.cpp
 
 darray.o: darray.cpp darray.h \
@@ -1021,9 +1019,7 @@ dHeap.o: dHeap.cpp dHeap.h \
 		pugiXML/pugixml.hpp \
 		pugiXML/pugiconfig.hpp \
 		d_pointer_size_type.h \
-		dobject.h \
-		dint.h \
-		dchar.h
+		dobject.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dHeap.o dHeap.cpp
 
 dPointer.o: dPointer.cpp dPointer.h
@@ -1065,9 +1061,7 @@ garbagecollector.o: garbagecollector.cpp garbagecollector.h \
 		socketserverHeap.h \
 		socketclienteHeap.h \
 		pugiXML/pugixml.hpp \
-		pugiXML/pugiconfig.hpp \
-		dint.h \
-		dchar.h
+		pugiXML/pugiconfig.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o garbagecollector.o garbagecollector.cpp
 
 socketclienteHeap.o: socketclienteHeap.cpp socketclienteHeap.h \

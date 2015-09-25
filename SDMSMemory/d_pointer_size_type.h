@@ -4,7 +4,9 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
+#include <string>
+#include <sstream>
 class d_pointer_size_type
 {
 public:
@@ -29,22 +31,22 @@ public:
 
 
     //set and get the pointer
-    int *getPuntero() const;
+    int getPuntero() const;
     void setPuntero(int value);
 
     //set and get size of the pointer
     int  getSize() const;
 
     //set and get datatype
-    char *getDataType() ;
-    void setDataType(char *value);
+    char getDataType();
+    void setDataType(char value);
 
 
 private:
-    int* ID= (int*)calloc(1,2*sizeof(int));//dInt is assigned to the size of 8 Bytes
+    int ID;//id para identificarlo
     int* dirPuntero= (int*)calloc(1,2*sizeof(int));//puntero is assigned to the size of 8 Bytes
     int* size= (int*)calloc(1,2*sizeof(char));//size is assigned to the size of 2 Bytes
-    char* dataType=(char*)calloc(1,sizeof(char));// dataType is assigned to the size of 1 Byte
+    char* dataType=(char*)calloc(1,sizeof(int));// dataType is assigned to the size of 1 Byte
     int* references=(int*)calloc(1,sizeof(char));// reference is assigned to the size of 1 Byte
     //d_pointer lack variable
 };

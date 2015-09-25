@@ -2,14 +2,19 @@
 
 dInt::dInt()
 {
-   d_pointer_size_type *memoria=heap->dMalloc(sizeof(int),"dInt");
+   id=heap->newDpointerSize(sizeof(int),"I");
 
 
-    cout<<" dInt "<<endl;
+    cout<<" dInt "<<id<<endl;
 
 }
  void operator<<(ostream& os,const dInt& dt){
-    os << *dt.x<<"\n";
+     Pointer puntero;
+     puntero.id=dt.id;
+     Pointer *data=dt.heap->d_get(puntero);
+     //dt.x=&(data->dataint);
+
+    os << data->dataint<<"\n";
 
 }
 dInt& dInt::operator = (const dInt &p){
@@ -21,8 +26,10 @@ dInt& dInt::operator = (const dInt &p){
 }
 dInt& dInt::operator = (const int& p){
    cout<<" hola "<<endl;
-
-
+  Pointer puntero;
+  puntero.dataint=p;
+  puntero.id=this->id;
+  heap->d_set(puntero);
    return *this;
 
 }
