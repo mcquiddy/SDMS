@@ -11,7 +11,8 @@
 #include <dHeap.h>
 #include <dobject.h>
 #include "sdsmemorynode.h"
-
+#include <ctime>
+ #include <cstdio>
 
 using namespace std;
 
@@ -21,18 +22,25 @@ using namespace std;
      QCoreApplication a(argc, argv);
 
 
+
+
+
 //dHeap* heap=dHeap::getInstance();
 //heap->cargarNodos();
+
+
 //dString s;
+
 //s="hola";
+
 //cout<<s;
+
 //dInt b;
 //b=5;
 //cout<<b;
 //d_pointer_size_type* hola=NULL;
 //heap->d_free(hola);
-
-SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7008,7001);
+SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7007,7001);
 /*!
 CODIGO DE SANTI  Y CRISTIAN!!!!!
 >>>>>>> Stashed changes

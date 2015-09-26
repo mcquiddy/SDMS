@@ -15,7 +15,7 @@
 #include <string>
 #include <sstream>
 #include "linked_list.h"
-#include "dPointer.h"
+
 #include "rapidjson/reader.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
@@ -57,6 +57,8 @@ class d_pointer_size_type;
 class dHeap
 {
 private:
+
+    pthread_mutex_t lock;
     static dHeap* unicdHeap;
     static void* run(void* obj);
     int contadorID;

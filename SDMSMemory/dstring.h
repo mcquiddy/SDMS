@@ -9,6 +9,7 @@ class dString: public dObject
 public:
     dString();
     dString& operator = (const string &p);
+
     dString& operator = ( const dString& p);
     string getDato();
     bool& operator==(const string& obj);

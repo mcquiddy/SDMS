@@ -27,18 +27,23 @@ dString::dString()
  string dString::getDato()
  {
      Pointer puntero;
-     puntero.id=id;
+     cout<<" id "<<this->id<<endl;
+     puntero.id=this->id;
      Pointer *data=heap->d_get(puntero);
+if(data==NULL){
+    cout<<" no se encontro "<<endl;
+}
      return data->datastring;
 
 
  }
- dString& dString::operator = (const string& p){
 
-     id=heap->newDpointerSize(sizeof(char)*(p.length()-1), "S");
+ dString& dString::operator =(const string &p){
+
+     id=heap->newDpointerSize(sizeof(char)*(p.length()), "S");
 
 
-      cout<<" dString "<<id<<endl;
+      cout<<" dString "<<this->id<<endl;
      Pointer puntero;
      puntero.datastring=p;
      puntero.id=this->id;
@@ -48,6 +53,8 @@ dString::dString()
     return *this;
 
  }
+
+
 
  bool& dString::operator==(const string& obj){
       bool c= true;

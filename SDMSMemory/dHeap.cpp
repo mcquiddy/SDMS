@@ -25,6 +25,7 @@ dHeap::dHeap(){
     list_dpointer=new lista< d_pointer_size_type *>();
     contadorID=0;
     getPointer= new Pointer();
+    flag_dirpointer=false;
     if(SDSMport!=-1 && SDSMstatus!=-1){
         this->newSDSM = new  SocketServerHeap(SDSMport,this);
         this->newStatus=new  SocketServerHeap(SDSMstatus,this);
@@ -75,7 +76,7 @@ void dHeap::cargarNodos()
 
 
         }
-         newNodeXML("172.19.12.21",7008,7001);
+         newNodeXML("192.168.1.122",7007,7001);
          cout<<"Carga completa"<<endl;
 
     }
@@ -129,6 +130,7 @@ void dHeap::newNodeXML(char *ip, int puerto, int status)
  */
 void dHeap::d_set(Pointer pointer){
 
+    pthread_mutex_lock(&lock);
     d_pointer_size_type* puntero=this->searchDpointer(pointer.id);
     if(puntero!=NULL){
 
@@ -202,6 +204,7 @@ void dHeap::d_set(Pointer pointer){
  * \param pSize
  */
 void dHeap::d_calloc(int pSize){
+    flag_dirpointer=true;
     cout<<" de calooc "<<endl;
     StringBuffer s;
     Writer<StringBuffer> writer(s);
@@ -214,9 +217,11 @@ void dHeap::d_calloc(int pSize){
     cout<<s.GetString()<<endl;
     //const char* mensaje = s.GetString();
     cout<<list_nodos->get_head()->get_data()->puerto->getDescriptor();
+
     list_nodos->get_head()->get_data()->puerto->setMensaje(s.GetString());
     cout<<"puerto->sentMns(mensaje,8);"<<endl;
-    flag_dirpointer=true;
+
+
 
 }
 /*!
@@ -243,6 +248,7 @@ void dHeap::d_free(d_pointer_size_type *toFree){
  * \param toGet
  */
 Pointer* dHeap::d_get(Pointer pointer){
+    pthread_mutex_lock(&lock);
     d_pointer_size_type* puntero=this->searchDpointer(pointer.id);
     if(puntero!=NULL){
 
@@ -300,14 +306,17 @@ Pointer* dHeap::d_get(Pointer pointer){
 
     writer.EndObject();
 
+
+    cout<<" entro while dato "<<endl;
+//    while(flag_dirpointer){
+//        //cout<<" obteniendo dato"<<endl;
+
+//    }
     cout<<" d_get "<<s.GetString()<<endl;
    list_nodos->get_head()->get_data()->puerto->setMensaje(s.GetString());
-   cout<<" entro while dato "<<endl;
-   flag_dget=true;
-   while(flag_dget){
-       //cout<<" obteniendo dato"<<endl;
 
-   }
+
+
    cout<<" salio while dato "<<endl;
    return getPointer;
 
@@ -321,7 +330,7 @@ Pointer* dHeap::d_get(Pointer pointer){
  */
 
 d_pointer_size_type* dHeap::dMalloc(int size, char *type){
-
+ pthread_mutex_lock(&lock);
     d_pointer_size_type * pointer=new d_pointer_size_type();
      cout<<" d malloc "<<endl;
     pointer->setDataType(*(type));
@@ -331,12 +340,15 @@ cout<<" d type "<<endl;
     pointer->setID(contadorID);
 
     contadorID++;
-    d_calloc(size);
-    cout<<" entro while "<<endl;
-    while(flag_dirpointer){
-        cout<<" reservando memoria "<<endl;
 
-    }
+    cout<<" entro while "<<endl;
+
+//    while(flag_dirpointer){
+//        //cout<<" reservando memoria "<<endl;
+
+//    }
+
+    d_calloc(size);
     cout<<" salio while "<<endl;
     cout<<" id malloc "<<contadorID<<endl;
     cout<<" tipo mallos "<<*(type)<<endl;
@@ -463,13 +475,15 @@ void dHeap::checkcalloc(bool status, int direccion)
     if(status==true){
         cout<<" reservacion correcta "<<endl;
         dirPointer=direccion;
-        flag_dirpointer=false;
+
     }
     else{
         cout<<" reservacion incorrecta "<<endl;
         dirPointer=-1;
-        flag_dirpointer=false;
+
     }
+
+    pthread_mutex_unlock(&lock);
 
 }
 
@@ -493,6 +507,7 @@ void dHeap::checkset(int status)
         cout<<" no se pudo setear"<<endl;
     }
 
+    pthread_mutex_unlock(&lock);
 }
 
 
@@ -534,6 +549,7 @@ void dHeap::reciveMns(char * message)
                 direccion = doc["direccion"].GetInt();
             }
         }
+         flag_dirpointer=false;
         checkcalloc(status,direccion);
     }
      //Si la orden o protocolo es d_status se llama a que retorne es estado de memoria
@@ -616,8 +632,8 @@ void dHeap::reciveMns(char * message)
                 }
             }
         }
-
-        flag_dget=false;
+        pthread_mutex_unlock(&lock);
+        flag_dirpointer=false;
     }
     else{
         int status;

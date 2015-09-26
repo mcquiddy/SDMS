@@ -14,7 +14,7 @@ void SDSMemoryNode::start(int Puerto, int Puerto_status)
     this->puerto_status = new SocketServer(Puerto_status,this);
 
     SDSMemoryServer::start();
-   //  this->informar("192.168.1.122",5000);
+     this->informar("192.168.1.122",7090);
 
 
 }
