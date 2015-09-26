@@ -23,6 +23,16 @@ dString::dString()
     return *this;
 
  }
+
+ string dString::getDato()
+ {
+     Pointer puntero;
+     puntero.id=id;
+     Pointer *data=heap->d_get(puntero);
+     return data->datastring;
+
+
+ }
  dString& dString::operator = (const string& p){
 
      id=heap->newDpointerSize(sizeof(char)*(p.length()-1), "S");

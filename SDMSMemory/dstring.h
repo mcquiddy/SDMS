@@ -10,6 +10,7 @@ public:
     dString();
     dString& operator = (const string &p);
     dString& operator = ( const dString& p);
+    string getDato();
     bool& operator==(const string& obj);
     bool& operator==(const dString& obj);
     friend void operator<<(ostream& os, const dString& dt);
