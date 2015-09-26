@@ -61,7 +61,7 @@ void dHeap::cargarNodos()
 {
     cout<<"Cargando nodos...";
     pugi::xml_document doc;
-    if (!doc.load_file(PATH.c_str())){
+    if (!doc.load_file("/home/mcquiddy/git/SDMS/config.xml")){
         cout<<"Error al cargar xml\n";
     }
     else{
@@ -76,7 +76,7 @@ void dHeap::cargarNodos()
 
 
         }
-         newNodeXML("192.168.1.139",7007,7001);
+         newNodeXML("192.168.1.122",7007,7001);
          cout<<"Carga completa"<<endl;
 
     }
@@ -85,7 +85,7 @@ void dHeap::cargarNodos()
 int dHeap::cargarPuerto(char *port)
 {
     pugi::xml_document doc;
-    if (!doc.load_file(PATH.c_str())){
+    if (!doc.load_file("/home/mcquiddy/git/SDMS/config.xml")){
         cout<<"Error al cargar xml\n";
         return -1;
     }
@@ -121,37 +121,6 @@ void dHeap::newNodeXML(char *ip, int puerto, int status)
            cout<<" nuevo nodo fallado "<<endl;
     }
 
-}
-
-void dHeap::Status()
-{
-    StringBuffer s;
-    Writer<StringBuffer> writer(s);
-    writer.String("total");
-    writer.Int(total_memoria);
-    writer.String("diponible");
-    int disponible=0;
-    Node<NodoSDSM*> *temp=list_nodos->get_head();
-    while(temp!=NULL){
-        disponible+=temp->get_data()->disponible;
-        temp=temp->get_next();
-    }
-    writer.Int(disponible);
-    writer.String("nodos");
-    writer.StartArray();
-    temp=list_nodos->get_head();
-    while(temp!=NULL){
-        writer.StartArray();
-        writer.Int(temp->get_data()->id);
-        writer.Int(temp->get_data()->size);
-        writer.Int(temp->get_data()->disponible);
-        writer.EndArray();
-        temp=temp->get_next();
-    }
-    writer.EndArray();
-    writer.EndObject();
-
-    newStatus->sentMns(s.GetString(),cliente_status);
 }
 
 
@@ -396,7 +365,7 @@ void dHeap::newNode(char *message)
     doc.ParseInsitu(message);
    if(doc.IsObject()){
            string ip;
-           int puerto,status,size;
+           int puerto,status;
        if(doc.HasMember("ip")){
 
            if(doc["ip"].IsString()){
@@ -418,13 +387,6 @@ void dHeap::newNode(char *message)
                status=doc["status"].GetInt();
            }
        }
-       /*if(doc.HasMember("size")){
-           if(doc["size"].IsInt()){
-               size=doc["size"].GetInt();
-               total_memoria+=size;
-           }
-       }
-       */
        SocketClienteHeap *newPuerto=new SocketClienteHeap(puerto,(char*)ip.c_str());
        SocketClienteHeap *newStatus=new SocketClienteHeap(status,(char*)ip.c_str());
        if(newPuerto->connectar()&&newStatus->connectar()){
@@ -433,7 +395,6 @@ void dHeap::newNode(char *message)
            newNodo->id=contadorID;
            newNodo->puerto=newPuerto;
            newNodo->status=newStatus;
-           //newNodo->size=size;
            contadorID++;
            list_nodos->insert_head(newNodo);
        }
@@ -562,6 +523,7 @@ void dHeap::checkset(int status)
  */
 void dHeap::reciveMns(char * message)
 {
+
     cout<<" recibe heap "<<message<<endl;
     Document doc;
     doc.ParseInsitu(message);
@@ -592,7 +554,7 @@ void dHeap::reciveMns(char * message)
     }
      //Si la orden o protocolo es d_status se llama a que retorne es estado de memoria
     else if(comando=="d_status"){
-        int mem_disponible,max_chunk,id;
+        int mem_disponible,max_chunk;
         if(doc.HasMember("memoria_disponible")){
             if(doc["memoria_disponible"].IsInt()){
                 mem_disponible= doc["memoria_disponible"].GetInt();
@@ -603,20 +565,7 @@ void dHeap::reciveMns(char * message)
                 max_chunk = doc["max_chunk"].GetInt();
             }
         }
-        if(doc.HasMember("id")){
-            if(doc["id"].IsInt()){
-                id = doc["id"].GetInt();
-            }
-        }
-        Node<NodoSDSM*> *temp=list_nodos->get_head();
-        while(temp!=NULL){
-            if(temp->get_data()->status->getDescriptor()==id){
-                temp->get_data()->disponible=mem_disponible;
-                break;
-            }
-            temp=temp->get_next();
-        }
-        Status();
+        //checkstatus(mem_disponible,max_chunk);
     }
     else if(comando =="d_get"){
         int status;
@@ -715,7 +664,6 @@ dHeap::~dHeap(){
 
     delete this;
 }
-
 
 
 
