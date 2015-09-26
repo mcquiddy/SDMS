@@ -6,6 +6,7 @@
 using namespace std;
 
 const string DELIMITADOR=";";
+const string PATH = "/home/santii/Proyecto1/SDMS/config.xml";
 
 
 

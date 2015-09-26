@@ -26,7 +26,7 @@
 #include "socketclienteHeap.h"
 #include "pugiXML/pugixml.hpp"
 #include "Node.h"
-
+#include "constants_SDSM.h"
 
 
 using namespace std;
@@ -36,6 +36,8 @@ struct NodoSDSM{
     SocketClienteHeap* puerto;
     SocketClienteHeap* status;
     int id;
+    int size;
+    int disponible;
 };
 
 struct Pointer{
@@ -62,7 +64,7 @@ private:
     static dHeap* unicdHeap;
     static void* run(void* obj);
     int contadorID;
-
+    int total_memoria;
     SocketServerHeap * newSDSM;
     SocketServerHeap * newStatus;
     bool flag_dirpointer;
@@ -74,15 +76,11 @@ private:
     int client;
     lista<NodoSDSM *>* list_nodos;
     char* id;
-
+    int cliente_status=5;
     int cargarPuerto(char* port);
     void newNodeXML(char* ip,int puerto,int status);
-
+    void Status();
     void d_calloc(int pSize);
-
-
-
-
 
 
     void checkcalloc(bool status, int direccion);
@@ -97,7 +95,7 @@ public:
     void d_set(Pointer pointer);
     void d_status();
     int newDpointerSize(int size, char *type);
-d_pointer_size_type * searchDpointer(int pID);
+    d_pointer_size_type * searchDpointer(int pID);
      void cargarNodos();
      d_pointer_size_type *dMalloc(int size, char* type);
      static dHeap* getInstance();

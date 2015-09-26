@@ -14,7 +14,7 @@ void SDSMemoryNode::start(int Puerto, int Puerto_status)
     this->puerto_status = new SocketServer(Puerto_status,this);
 
     SDSMemoryServer::start();
-     this->informar("192.168.1.122",7090);
+     this->informar("192.168.1.139",7090);
 
 
 }
@@ -79,6 +79,8 @@ void SDSMemoryNode::d_calloc(int pSize)
     const char* mensaje=s.GetString();
     cout<<"Enviando... "<<mensaje<<endl;
     puerto->sentMns(mensaje,client);
+
+    d_status();
 }
 
 /*!
@@ -105,6 +107,8 @@ void SDSMemoryNode::d_free(d_pointer_size free)
     const char* mensaje=s.GetString();
     cout<<"Enviando... "<<mensaje<<endl;
     puerto->sentMns(mensaje,client);
+
+    d_status();
 }
 
 
@@ -125,7 +129,8 @@ void SDSMemoryNode::d_status()
     writer.Int(estado.totalMemory);
     writer.String("max_chunk");
     writer.Int(estado.biggerChunk);
-
+    writer.String("id");
+    writer.Int(client);
 
     writer.EndObject();
     const char* mensaje=s.GetString();
@@ -167,6 +172,8 @@ string SDSMemoryNode::parseDelimitador(string* pString)
     return strData;
 
 }
+
+int SDSMemoryNode::getCliente(){return this->client;}
 
 /*!
  * \brief SDSMemoryNode::SDSMemoryNode
@@ -485,6 +492,8 @@ void SDSMemoryNode::informar(char *IP, int puerto)
     writer.Int(this->puerto->get_puerto());
     writer.String("status");
     writer.Int(puerto_status->get_puerto());
+    writer.String("size");
+    writer.Int(Manejador.memory);
     writer.EndObject();
     cout<<s.GetString()<<endl;
     if(miCliente->connectar()){

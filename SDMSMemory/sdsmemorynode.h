@@ -52,6 +52,7 @@ private:
 
 
 public:
+    int getCliente();
     SDSMemoryNode(int cantidad,char exponente,int Puerto, int Puerto_status);
     void newClient(int id,int Puerto)override;
     void reciveMns(char * message)override;
