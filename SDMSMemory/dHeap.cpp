@@ -483,7 +483,7 @@ void dHeap::checkcalloc(bool status, int direccion)
 
     }
 
-    pthread_mutex_unlock(&lock);
+    //pthread_mutex_unlock(&lock);
 
 }
 
@@ -507,7 +507,7 @@ void dHeap::checkset(int status)
         cout<<" no se pudo setear"<<endl;
     }
 
-    pthread_mutex_unlock(&lock);
+    //pthread_mutex_unlock(&lock);
 }
 
 
@@ -632,7 +632,7 @@ void dHeap::reciveMns(char * message)
                 }
             }
         }
-        pthread_mutex_unlock(&lock);
+       // pthread_mutex_unlock(&lock);
         flag_dirpointer=false;
     }
     else{

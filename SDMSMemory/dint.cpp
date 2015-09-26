@@ -35,8 +35,11 @@ dInt& dInt::operator = (const int& p){
 }
 
 bool& dInt::operator==(const int& obj){
+    Pointer puntero;
+    puntero.id=this->id;
+    Pointer *data=heap->d_get(puntero);
      bool c= true;
-     if(*this->x==obj){
+     if(data->dataint==obj){
         cout<<"son iguales"<<"\n";
      }
      else{
@@ -59,12 +62,24 @@ bool& dInt::operator==(const dInt& obj){
 
 }
 
-void dInt::operator++(int ){
-   this->x+=1;
+void dInt::operator++(int){
+    Pointer puntero;
+    puntero.id=this->id;
+    Pointer *data=heap->d_get(puntero);
+    data->dataint++;
+    puntero.dataint=data->dataint;
+    heap->d_set(puntero);
+
+
 
 }
-void dInt::operator--(int ){
-   this->x-=1;
+void dInt::operator--(int){
+    Pointer puntero;
+    puntero.id=this->id;
+    Pointer *data=heap->d_get(puntero);
+    data->dataint--;
+    puntero.dataint=data->dataint;
+    heap->d_set(puntero);
 
 }
 

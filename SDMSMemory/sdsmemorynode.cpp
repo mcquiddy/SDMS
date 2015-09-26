@@ -14,7 +14,7 @@ void SDSMemoryNode::start(int Puerto, int Puerto_status)
     this->puerto_status = new SocketServer(Puerto_status,this);
 
     SDSMemoryServer::start();
-     this->informar("192.168.1.122",7090);
+     //this->informar("172.19.12.21",7090);
 
 
 }
@@ -80,7 +80,7 @@ void SDSMemoryNode::d_calloc(int pSize)
     cout<<"Enviando... "<<mensaje<<endl;
     puerto->sentMns(mensaje,client);
 
-    d_status();
+    //d_status();
 }
 
 /*!
@@ -108,7 +108,7 @@ void SDSMemoryNode::d_free(d_pointer_size free)
     cout<<"Enviando... "<<mensaje<<endl;
     puerto->sentMns(mensaje,client);
 
-    d_status();
+    //d_status();
 }
 
 

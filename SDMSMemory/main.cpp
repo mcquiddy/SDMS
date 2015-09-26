@@ -25,9 +25,7 @@ using namespace std;
 
 
 
-    //dHeap* heap=dHeap::getInstance();
-    SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7007,7001);
-     //heap->cargarNodos();
+
 
 //dString s;
 
@@ -35,12 +33,20 @@ using namespace std;
 
 //cout<<s;
 
+//     dHeap* heap=dHeap::getInstance();
+
+//      heap->cargarNodos();
 //dInt b;
 //b=5;
 //cout<<b;
+//b++;
+//cout<<b;
+//b--;
+//cout<<b;
+
 //d_pointer_size_type* hola=NULL;
 //heap->d_free(hola);
-
+SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7005,7001);
 /*!
 CODIGO DE SANTI  Y CRISTIAN!!!!!
 >>>>>>> Stashed changes
