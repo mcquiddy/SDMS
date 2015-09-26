@@ -29,6 +29,7 @@ struct bystream{
     char* dataArraychar[];
     long datalong;
     double datadouble;
+    string dataString;
 
 
 };
@@ -56,6 +57,7 @@ int memory;
      bystream obtenerDatoArrayChar(d_pointer_size pPointerSize);
      bystream obtenerDatoLong(d_pointer_size pPointerSize);
      bystream obtenerDatoDouble(d_pointer_size pPointerSize);
+     bystream obtenerDatoString(d_pointer_size pPointerSize);
 
 //Setear diferentes tipos de datos
    int setearDatoInt(d_pointer_size pPointerSize, int pData);
@@ -66,6 +68,7 @@ int memory;
    int setearDatoArrayChar(d_pointer_size pPointerSize, char* pData);
    int setearDatoLong(d_pointer_size pPointerSize, long pData);
    int setearDatoDouble(d_pointer_size pPointerSize, double pData);
+   int setearDatoString(d_pointer_size pPointerSize, string pData);
 
     d_estado status();
     bool setMemory(int pSize);

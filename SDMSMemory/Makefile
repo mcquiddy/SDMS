@@ -65,7 +65,8 @@ SOURCES       = main.cpp \
 		socketserverHeap.cpp \
 		socketcliente.cpp \
 		ostream.cpp \
-		pointer.cpp moc_socketcliente.cpp
+		pointer.cpp \
+		dstring.cpp moc_socketcliente.cpp
 OBJECTS       = main.o \
 		d_pointer_size_type.o \
 		darray.o \
@@ -87,6 +88,7 @@ OBJECTS       = main.o \
 		socketcliente.o \
 		ostream.o \
 		pointer.o \
+		dstring.o \
 		moc_socketcliente.o
 DIST          = ../../../Qt5.3.0/5.3/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.3.0/5.3/gcc_64/mkspecs/common/shell-unix.conf \
@@ -213,7 +215,8 @@ DIST          = ../../../Qt5.3.0/5.3/gcc_64/mkspecs/features/spec_pre.prf \
 		socketserverHeap.cpp \
 		socketcliente.cpp \
 		ostream.cpp \
-		pointer.cpp
+		pointer.cpp \
+		dstring.cpp
 QMAKE_TARGET  = SDMSMemory
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = SDMSMemory
@@ -468,7 +471,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/SDMSMemory1.0.0 || mkdir -p .tmp/SDMSMemory1.0.0
-	$(COPY_FILE) --parents $(DIST) .tmp/SDMSMemory1.0.0/ && $(COPY_FILE) --parents constants_SDSM.h d_pointer_size_type.h darray.h dchar.h dint.h dlong.h dobject.h linked_list.h memorymannager.h Node.h sdsmemorynode.h sdsmemoryserver.h socketserver.h rapidjson/error/en.h rapidjson/error/error.h rapidjson/internal/biginteger.h rapidjson/internal/diyfp.h rapidjson/internal/dtoa.h rapidjson/internal/ieee754.h rapidjson/internal/itoa.h rapidjson/internal/meta.h rapidjson/internal/pow10.h rapidjson/internal/stack.h rapidjson/internal/strfunc.h rapidjson/internal/strtod.h rapidjson/internal/swap.h rapidjson/msinttypes/inttypes.h rapidjson/msinttypes/stdint.h rapidjson/allocators.h rapidjson/document.h rapidjson/encodedstream.h rapidjson/encodings.h rapidjson/filereadstream.h rapidjson/filewritestream.h rapidjson/memorybuffer.h rapidjson/memorystream.h rapidjson/pointer.h rapidjson/prettywriter.h rapidjson/rapidjson.h rapidjson/reader.h rapidjson/stringbuffer.h rapidjson/writer.h client.h dHeap.h dPointer.h pugiXML/pugiconfig.hpp pugiXML/pugixml.hpp garbagecollector.h socketclienteHeap.h socketserverHeap.h NodeTree.h server.h socketcliente.h TreeBinary.h xmlmanager.h ostream.h .tmp/SDMSMemory1.0.0/ && $(COPY_FILE) --parents main.cpp d_pointer_size_type.cpp darray.cpp dchar.cpp dint.cpp dlong.cpp dobject.cpp memorymannager.cpp sdsmemorynode.cpp sdsmemoryserver.cpp socketserver.cpp client.cpp dHeap.cpp dPointer.cpp pugiXML/pugixml.cpp garbagecollector.cpp socketclienteHeap.cpp socketserverHeap.cpp socketcliente.cpp ostream.cpp pointer.cpp .tmp/SDMSMemory1.0.0/ && (cd `dirname .tmp/SDMSMemory1.0.0` && $(TAR) SDMSMemory1.0.0.tar SDMSMemory1.0.0 && $(COMPRESS) SDMSMemory1.0.0.tar) && $(MOVE) `dirname .tmp/SDMSMemory1.0.0`/SDMSMemory1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/SDMSMemory1.0.0
+	$(COPY_FILE) --parents $(DIST) .tmp/SDMSMemory1.0.0/ && $(COPY_FILE) --parents constants_SDSM.h d_pointer_size_type.h darray.h dchar.h dint.h dlong.h dobject.h linked_list.h memorymannager.h Node.h sdsmemorynode.h sdsmemoryserver.h socketserver.h rapidjson/error/en.h rapidjson/error/error.h rapidjson/internal/biginteger.h rapidjson/internal/diyfp.h rapidjson/internal/dtoa.h rapidjson/internal/ieee754.h rapidjson/internal/itoa.h rapidjson/internal/meta.h rapidjson/internal/pow10.h rapidjson/internal/stack.h rapidjson/internal/strfunc.h rapidjson/internal/strtod.h rapidjson/internal/swap.h rapidjson/msinttypes/inttypes.h rapidjson/msinttypes/stdint.h rapidjson/allocators.h rapidjson/document.h rapidjson/encodedstream.h rapidjson/encodings.h rapidjson/filereadstream.h rapidjson/filewritestream.h rapidjson/memorybuffer.h rapidjson/memorystream.h rapidjson/pointer.h rapidjson/prettywriter.h rapidjson/rapidjson.h rapidjson/reader.h rapidjson/stringbuffer.h rapidjson/writer.h client.h dHeap.h dPointer.h pugiXML/pugiconfig.hpp pugiXML/pugixml.hpp garbagecollector.h socketclienteHeap.h socketserverHeap.h NodeTree.h server.h socketcliente.h TreeBinary.h xmlmanager.h ostream.h dstring.h .tmp/SDMSMemory1.0.0/ && $(COPY_FILE) --parents main.cpp d_pointer_size_type.cpp darray.cpp dchar.cpp dint.cpp dlong.cpp dobject.cpp memorymannager.cpp sdsmemorynode.cpp sdsmemoryserver.cpp socketserver.cpp client.cpp dHeap.cpp dPointer.cpp pugiXML/pugixml.cpp garbagecollector.cpp socketclienteHeap.cpp socketserverHeap.cpp socketcliente.cpp ostream.cpp pointer.cpp dstring.cpp .tmp/SDMSMemory1.0.0/ && (cd `dirname .tmp/SDMSMemory1.0.0` && $(TAR) SDMSMemory1.0.0.tar SDMSMemory1.0.0 && $(COMPRESS) SDMSMemory1.0.0.tar) && $(MOVE) `dirname .tmp/SDMSMemory1.0.0`/SDMSMemory1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/SDMSMemory1.0.0
 
 
 clean:compiler_clean 
@@ -609,7 +612,7 @@ main.o: main.cpp ../../../Qt5.3.0/5.3/gcc_64/include/QtCore/QCoreApplication \
 		../../../Qt5.3.0/5.3/gcc_64/include/QtCore/qisenum.h \
 		../../../Qt5.3.0/5.3/gcc_64/include/QtCore/qobject_impl.h \
 		../../../Qt5.3.0/5.3/gcc_64/include/QtCore/qeventloop.h \
-		dint.h \
+		dstring.h \
 		dobject.h \
 		dHeap.h \
 		linked_list.h \
@@ -641,6 +644,7 @@ main.o: main.cpp ../../../Qt5.3.0/5.3/gcc_64/include/QtCore/QCoreApplication \
 		socketclienteHeap.h \
 		pugiXML/pugixml.hpp \
 		pugiXML/pugiconfig.hpp \
+		dint.h \
 		dchar.h \
 		dlong.h \
 		../../../Qt5.3.0/5.3/gcc_64/include/QtNetwork/QNetworkInterface \
@@ -1217,6 +1221,40 @@ ostream.o: ostream.cpp ostream.h \
 
 pointer.o: pointer.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pointer.o pointer.cpp
+
+dstring.o: dstring.cpp dstring.h \
+		dobject.h \
+		dHeap.h \
+		linked_list.h \
+		Node.h \
+		dPointer.h \
+		rapidjson/reader.h \
+		rapidjson/rapidjson.h \
+		rapidjson/msinttypes/stdint.h \
+		rapidjson/msinttypes/inttypes.h \
+		rapidjson/allocators.h \
+		rapidjson/encodings.h \
+		rapidjson/internal/meta.h \
+		rapidjson/internal/stack.h \
+		rapidjson/internal/swap.h \
+		rapidjson/internal/strtod.h \
+		rapidjson/internal/ieee754.h \
+		rapidjson/internal/biginteger.h \
+		rapidjson/internal/diyfp.h \
+		rapidjson/internal/pow10.h \
+		rapidjson/error/error.h \
+		rapidjson/writer.h \
+		rapidjson/internal/strfunc.h \
+		rapidjson/internal/dtoa.h \
+		rapidjson/internal/itoa.h \
+		rapidjson/stringbuffer.h \
+		rapidjson/document.h \
+		rapidjson/prettywriter.h \
+		socketserverHeap.h \
+		socketclienteHeap.h \
+		pugiXML/pugixml.hpp \
+		pugiXML/pugiconfig.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dstring.o dstring.cpp
 
 moc_socketcliente.o: moc_socketcliente.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_socketcliente.o moc_socketcliente.cpp

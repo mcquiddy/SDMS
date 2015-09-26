@@ -347,6 +347,28 @@ void SDSMemoryNode::reciveMns(char * message){
 
 
                            }
+                           else if(tipo=="string"){
+
+                                if(comando=="d_set"){
+                                    if(doc.HasMember("dato")){
+                                    if(doc["dato"].IsString()){
+                                     //Parsear a string
+                                     string pData =doc["dato"].GetString();
+                                     status= Manejador.setearDatoString(pointerSize,pData);
+                                    }
+                                    }
+                                }
+                               if(comando=="d_get"){
+
+                                   statusBystream=Manejador.obtenerDatoString(pointerSize);
+                                   writer.String(statusBystream.dataString.c_str());
+                                   writer.String("tipo");
+                                   writer.String("string");
+
+                                }
+
+
+                           }
                            else if(tipo=="bool"){
                        //Parsear a bool
                                  //status= Manejador.setearDatoBool(pointerSize,pData);

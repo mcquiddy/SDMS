@@ -12,7 +12,7 @@ dInt::dInt()
      Pointer puntero;
      puntero.id=dt.id;
      Pointer *data=dt.heap->d_get(puntero);
-     //dt.x=&(data->dataint);
+
 
     os << data->dataint<<"\n";
 
@@ -25,7 +25,7 @@ dInt& dInt::operator = (const dInt &p){
 
 }
 dInt& dInt::operator = (const int& p){
-   cout<<" hola "<<endl;
+
   Pointer puntero;
   puntero.dataint=p;
   puntero.id=this->id;

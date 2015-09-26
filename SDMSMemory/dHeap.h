@@ -49,6 +49,7 @@ struct Pointer{
     char* dataArraychar[];
     long datalong;
     double datadouble;
+    string datastring;
 
 };
 class d_pointer_size_type;

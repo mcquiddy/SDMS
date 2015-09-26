@@ -157,6 +157,11 @@ void dHeap::d_set(Pointer pointer){
         writer.String("tipo");
         writer.String("int");
     }
+    else if(tipo=='S'){
+        writer.String(pointer.datastring.c_str());
+        writer.String("tipo");
+        writer.String("string");
+    }
     //BOLEANO
     else if(tipo=='B'){
         writer.Bool(pointer.databool);
@@ -263,6 +268,10 @@ Pointer* dHeap::d_get(Pointer pointer){
 
         writer.String("int");
     }
+    else if(tipo=='S'){
+
+        writer.String("string");
+    }
     //BOLEANO
     else if(tipo=='B'){
 
@@ -296,7 +305,7 @@ Pointer* dHeap::d_get(Pointer pointer){
    cout<<" entro while dato "<<endl;
    flag_dget=true;
    while(flag_dget){
-       cout<<" obteniendo dato"<<endl;
+       //cout<<" obteniendo dato"<<endl;
 
    }
    cout<<" salio while dato "<<endl;
@@ -570,6 +579,14 @@ void dHeap::reciveMns(char * message)
                     //Parsear a char
                     int pData =doc["dato"].GetInt();
                     getPointer->dataint=pData;
+
+                }
+                }
+            else if(tipo=="string"){
+                if(doc["dato"].IsString()){
+                    //Parsear a string
+                    string pData =doc["dato"].GetString();
+                    getPointer->datastring=pData;
 
                 }
                 }

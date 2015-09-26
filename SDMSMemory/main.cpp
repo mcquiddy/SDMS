@@ -1,6 +1,6 @@
 #include <QCoreApplication>
 #include <iostream>
-
+#include "dstring.h"
 #include <dint.h>
 #include <dchar.h>
 #include <dlong.h>
@@ -23,12 +23,14 @@ using namespace std;
 
 dHeap* heap=dHeap::getInstance();
 heap->cargarNodos();
-dInt b;
-b=5;
-cout<<b;
-d_pointer_size_type* hola=NULL;
+dString s;
+s="hola";
+cout<<s;
+//dInt b;
+//b=5;
+//cout<<b;
+//d_pointer_size_type* hola=NULL;
 //heap->d_free(hola);
-
 
 //SDSMemoryNode *nodeMemory=new SDSMemoryNode(2,'M',7008,7001);
 /*!

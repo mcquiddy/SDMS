@@ -35,7 +35,8 @@ SOURCES += main.cpp \
     socketserverHeap.cpp \
     socketcliente.cpp \
     ostream.cpp \
-    pointer.cpp
+    pointer.cpp \
+    dstring.cpp
 
 HEADERS += \
     constants_SDSM.h \
@@ -93,4 +94,5 @@ HEADERS += \
     socketcliente.h \
     TreeBinary.h \
     xmlmanager.h \
-    ostream.h
+    ostream.h \
+    dstring.h

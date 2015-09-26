@@ -273,6 +273,29 @@ bystream MemoryMannager::obtenerDatoDouble(d_pointer_size pPointerSize)
     return dato;
 }
 
+bystream MemoryMannager::obtenerDatoString(d_pointer_size pPointerSize)
+{
+    bystream dato;
+
+    char* puntero =(char*)(cantidadMemoria + pPointerSize.pointer.dirMemory);
+
+    if(puntero==NULL){
+        dato.status=0;
+    }
+    else{
+        dato.status=1;
+
+
+
+
+           dato.dataString=dato.dataString.append(&(*puntero));
+
+
+
+    }
+    return dato;
+}
+
 
 /*!
  * \brief MemoryMannager::setearDatoInt
@@ -437,6 +460,25 @@ int MemoryMannager::setearDatoDouble(d_pointer_size pPointerSize, double pData)
 {
 
     int status;
+    return status;
+}
+
+int MemoryMannager::setearDatoString(d_pointer_size pPointerSize, string pData)
+{
+    int status;
+
+    char* puntero =(char*)(cantidadMemoria + pPointerSize.pointer.dirMemory);
+
+    if(puntero==NULL){
+        status=0;
+    }
+    else{
+        char* dato=(char*)pData.c_str();
+        for(int i=0;i<=pPointerSize.bytes;i++){
+            *(puntero +sizeof(char)*i)=dato[i];
+}
+        status=1;
+    }
     return status;
 }
 
